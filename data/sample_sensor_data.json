@@ -1,0 +1,8 @@
+{
+  "machine_id": "MACHINE_01",
+  "temperature": 42,
+  "vibration_x": 0.2,
+  "vibration_y": 0.2,
+  "vibration_z": 0.3,
+  "rpm": 1450
+}
