@@ -63,6 +63,24 @@ def get_model_info():
 def predict(data: SensorData):
     sensor_data = data.model_dump()
 
+    if sensor_data["machine_id"].strip() == "":
+        raise HTTPException(status_code=422, detail="machine_id cannot be empty")
+
+    if sensor_data["temperature"] < 0 or sensor_data["temperature"] > 120:
+        raise HTTPException(status_code=422, detail="temperature must be between 0 and 120")
+
+    if sensor_data["vibration_x"] < 0 or sensor_data["vibration_x"] > 5:
+        raise HTTPException(status_code=422, detail="vibration_x must be between 0 and 5")
+
+    if sensor_data["vibration_y"] < 0 or sensor_data["vibration_y"] > 5:
+        raise HTTPException(status_code=422, detail="vibration_y must be between 0 and 5")
+
+    if sensor_data["vibration_z"] < 0 or sensor_data["vibration_z"] > 5:
+        raise HTTPException(status_code=422, detail="vibration_z must be between 0 and 5")
+
+    if sensor_data["rpm"] < 0 or sensor_data["rpm"] > 10000:
+        raise HTTPException(status_code=422, detail="rpm must be between 0 and 10000")
+
     features = extract_features(sensor_data)
     prediction = predict_with_model(features)
 
