@@ -85,8 +85,7 @@ def predict(data: SensorData):
     prediction = predict_with_model(features)
     anomaly = detect_anomaly(features)
 
-    prediction_id = save_prediction(sensor_data, features, prediction)
-
+    prediction_id = save_prediction(sensor_data, features, prediction, anomaly)
     return {
         "prediction_id": prediction_id,
         "input": sensor_data,

@@ -1,7 +1,9 @@
 import os
+
 import psycopg2
 from psycopg2.extras import Json, RealDictCursor
 from dotenv import load_dotenv
+
 
 load_dotenv()
 
@@ -13,6 +15,7 @@ DB_PASSWORD = os.getenv("DB_PASSWORD")
 
 if DB_PASSWORD is None:
     raise ValueError("DB_PASSWORD is missing. Add it to your .env file.")
+
 
 def get_connection():
     return psycopg2.connect(
@@ -41,9 +44,19 @@ def init_db():
             recommended_action TEXT NOT NULL,
             sensor_data JSONB NOT NULL,
             features JSONB NOT NULL,
+            is_anomaly BOOLEAN,
+            anomaly_reasons JSONB,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );
         """
+    )
+
+    cursor.execute(
+        "ALTER TABLE predictions ADD COLUMN IF NOT EXISTS is_anomaly BOOLEAN;"
+    )
+
+    cursor.execute(
+        "ALTER TABLE predictions ADD COLUMN IF NOT EXISTS anomaly_reasons JSONB;"
     )
 
     connection.commit()
@@ -51,7 +64,12 @@ def init_db():
     connection.close()
 
 
-def save_prediction(sensor_data: dict, features: dict, prediction: dict):
+def save_prediction(
+    sensor_data: dict,
+    features: dict,
+    prediction: dict,
+    anomaly: dict
+):
     connection = get_connection()
     cursor = connection.cursor()
 
@@ -66,9 +84,11 @@ def save_prediction(sensor_data: dict, features: dict, prediction: dict):
             failure_probability,
             recommended_action,
             sensor_data,
-            features
+            features,
+            is_anomaly,
+            anomaly_reasons
         )
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
         RETURNING id;
         """,
         (
@@ -80,7 +100,9 @@ def save_prediction(sensor_data: dict, features: dict, prediction: dict):
             prediction["failure_probability"],
             prediction["recommended_action"],
             Json(sensor_data),
-            Json(features)
+            Json(features),
+            anomaly["is_anomaly"],
+            Json(anomaly["anomaly_reasons"])
         )
     )
 
@@ -108,6 +130,8 @@ def get_recent_predictions(limit: int = 20):
             risk_level,
             failure_probability,
             recommended_action,
+            is_anomaly,
+            anomaly_reasons,
             created_at
         FROM predictions
         ORDER BY created_at DESC
@@ -122,3 +146,4 @@ def get_recent_predictions(limit: int = 20):
     connection.close()
 
     return rows
+
