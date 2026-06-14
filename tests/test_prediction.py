@@ -6,6 +6,7 @@ def test_normal_prediction():
         "machine_id": "MACHINE_01",
         "temperature": 42,
         "vibration_total": 0.5,
+        "vibration_rms": 0.3,
         "rpm": 1450
     }
 
@@ -20,6 +21,7 @@ def test_warning_prediction():
         "machine_id": "MACHINE_01",
         "temperature": 55,
         "vibration_total": 1.2,
+        "vibration_rms": 0.7,
         "rpm": 1450
     }
 
@@ -34,6 +36,7 @@ def test_critical_prediction():
         "machine_id": "MACHINE_01",
         "temperature": 75,
         "vibration_total": 1.9,
+        "vibration_rms": 1.1,
         "rpm": 1450
     }
 
