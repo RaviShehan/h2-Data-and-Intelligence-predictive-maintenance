@@ -17,6 +17,8 @@ The system receives machine sensor readings, extracts vibration and temperature 
 * RandomForestClassifier ML model for machine risk prediction
 * Prediction probability output for each risk class
 * `/model-info` endpoint for ML model lifecycle information
+* Streaming anomaly detection for abnormal sensor behavior
+
 
 ## System Flow
 
@@ -108,6 +110,43 @@ This helps verify how well the model predicts the three machine health classes:
 * NORMAL
 * WARNING
 * CRITICAL
+
+
+## Streaming Anomaly Detection
+
+The system includes anomaly detection logic to identify abnormal machine sensor behavior during prediction.
+
+The anomaly detection module checks extracted sensor features such as:
+
+* temperature
+* vibration_total
+* rpm
+
+An anomaly is detected when sensor values exceed predefined safety thresholds.
+
+Examples of detected anomalies:
+
+* Very high temperature detected
+* Abnormal vibration level detected
+* RPM too low for normal operation
+* RPM too high for normal operation
+
+Anomaly detection is integrated with the `/predict` API response.
+
+Example output:
+
+```json
+{
+  "anomaly_detection": {
+    "is_anomaly": true,
+    "anomaly_reasons": [
+      "Very high temperature detected"
+    ]
+  }
+}
+```
+
+This supports real-time monitoring of abnormal machine behavior in the predictive maintenance pipeline.
 
 
 
@@ -276,6 +315,8 @@ Completed:
 * Unit tests
 * RandomForestClassifier model training
 * ML model integration with FastAPI
+* Streaming anomaly detection module
+* Unit tests for anomaly detection
 
 Future improvements:
 
