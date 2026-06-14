@@ -81,6 +81,33 @@ Example model output:
   }
 }
 ```
+## Model Evaluation
+
+The trained RandomForestClassifier model can be evaluated using the saved training dataset.
+
+Evaluation script:
+
+```text
+models/evaluate_model.py
+```
+
+Run model evaluation:
+
+```bash
+venv\Scripts\python.exe models/evaluate_model.py
+```
+
+The evaluation output includes:
+
+* Accuracy score
+* Classification report
+* Confusion matrix
+
+This helps verify how well the model predicts the three machine health classes:
+
+* NORMAL
+* WARNING
+* CRITICAL
 
 
 
@@ -96,6 +123,10 @@ Example model output:
 * kafka-python
 * psycopg2
 * pytest
+* scikit-learn
+* pandas
+* NumPy
+* joblib
 
 ## API Endpoints
 
