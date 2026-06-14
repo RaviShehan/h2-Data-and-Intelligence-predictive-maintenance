@@ -2,7 +2,7 @@
 
 This project is the Data and Intelligence component of the Group H Predictive Maintenance System.
 
-The system receives machine sensor readings, extracts vibration and temperature features, predicts machine health risk, and stores prediction history in PostgreSQL.
+The system receives machine sensor readings, extracts vibration and temperature features, predicts machine health risk, performs anomaly detection, and stores prediction history in PostgreSQL.
 
 ## Current Features
 
@@ -13,12 +13,13 @@ The system receives machine sensor readings, extracts vibration and temperature 
 * Kafka consumer for receiving sensor data
 * PostgreSQL prediction history storage
 * `/predictions` API endpoint to view stored prediction records
-* Unit tests for prediction logic
 * RandomForestClassifier ML model for machine risk prediction
 * Prediction probability output for each risk class
+* Model lifecycle metadata using `model_metadata.json`
 * `/model-info` endpoint for ML model lifecycle information
+* `/model-evaluation` endpoint to view saved ML evaluation results
 * Streaming anomaly detection for abnormal sensor behavior
-
+* Unit tests for prediction logic, API endpoints, ML model, and anomaly detection
 
 ## System Flow
 
@@ -33,7 +34,9 @@ Kafka Consumer
       ↓
 FastAPI /predict Endpoint
       ↓
-Feature Extraction + Prediction
+Feature Extraction
+      ↓
+ML Prediction + Anomaly Detection
       ↓
 PostgreSQL Database
 ```
@@ -83,6 +86,32 @@ Example model output:
   }
 }
 ```
+
+## Model Lifecycle Metadata
+
+The system stores model lifecycle information in a metadata file after model training.
+
+Metadata file:
+
+```text
+models/model_metadata.json
+```
+
+The metadata file includes:
+
+* Model name
+* Model type
+* Model file path
+* Training dataset path
+* Training timestamp
+* Input features
+* Risk classes
+* Accuracy score
+
+The `/model-info` endpoint reads this metadata file and returns the latest available model lifecycle information.
+
+This helps track which model version is currently used by the prediction API.
+
 ## Model Evaluation
 
 The trained RandomForestClassifier model can be evaluated using the saved training dataset.
@@ -105,12 +134,17 @@ The evaluation output includes:
 * Classification report
 * Confusion matrix
 
+The evaluation result is also saved to:
+
+```text
+models/evaluation_report.json
+```
+
 This helps verify how well the model predicts the three machine health classes:
 
 * NORMAL
 * WARNING
 * CRITICAL
-
 
 ## Streaming Anomaly Detection
 
@@ -148,8 +182,6 @@ Example output:
 
 This supports real-time monitoring of abnormal machine behavior in the predictive maintenance pipeline.
 
-
-
 ## Tech Stack
 
 * Python
@@ -166,6 +198,7 @@ This supports real-time monitoring of abnormal machine behavior in the predictiv
 * pandas
 * NumPy
 * joblib
+* httpx
 
 ## API Endpoints
 
@@ -183,7 +216,7 @@ This endpoint checks whether the API server is running.
 GET /model-info
 ```
 
-This endpoint returns information about the trained machine learning model used by the prediction service.
+This endpoint returns model lifecycle metadata from `models/model_metadata.json`.
 
 Example response:
 
@@ -192,7 +225,8 @@ Example response:
   "model_name": "Machine Health Risk Prediction Model",
   "model_type": "RandomForestClassifier",
   "model_file": "models/trained_model.pkl",
-  "model_available": true,
+  "training_data": "data/training_data.csv",
+  "trained_at": "2026-06-14T16:30:00",
   "input_features": [
     "temperature",
     "vibration_total",
@@ -202,7 +236,9 @@ Example response:
     "NORMAL",
     "WARNING",
     "CRITICAL"
-  ]
+  ],
+  "accuracy": 1.0,
+  "model_available": true
 }
 ```
 
@@ -304,7 +340,6 @@ GET /predictions
 
 This endpoint returns recently stored prediction records from PostgreSQL.
 
-
 ## Environment Variables
 
 Create a `.env` file in the project root.
@@ -361,16 +396,38 @@ Open a third terminal:
 venv\Scripts\python.exe consumer/kafka_prediction_consumer.py
 ```
 
+### 5. Train ML Model
+
+```bash
+venv\Scripts\python.exe models/train_model.py
+```
+
+This generates:
+
+* `data/training_data.csv`
+* `models/trained_model.pkl`
+* `models/model_metadata.json`
+
+### 6. Evaluate ML Model
+
+```bash
+venv\Scripts\python.exe models/evaluate_model.py
+```
+
+This generates:
+
+* `models/evaluation_report.json`
+
 ## Run Tests
 
 ```bash
-venv\Scripts\python.exe -m pytest
+venv\Scripts\python.exe -m pytest tests
 ```
 
 Expected result:
 
 ```text
-3 passed
+11 passed
 ```
 
 ## Project Status
@@ -381,17 +438,26 @@ Completed:
 * Kafka producer and consumer
 * PostgreSQL prediction storage
 * Prediction history endpoint
-* Unit tests
 * RandomForestClassifier model training
 * ML model integration with FastAPI
+* Prediction probability output
+* Model lifecycle metadata generation
+* `/model-info` endpoint connected to metadata file
+* Model evaluation report generation
+* `/model-evaluation` endpoint
 * Streaming anomaly detection module
+* Unit tests for prediction logic
+* Unit tests for ML model
+* Unit tests for API endpoints
 * Unit tests for anomaly detection
 
 Future improvements:
 
-* Train machine learning model using real predictive maintenance dataset
+* Train machine learning model using a real predictive maintenance dataset
 * Add MLflow model tracking
 * Add advanced signal processing using SciPy
 * Add dashboard integration for H3 team
-* Add model performance evaluation
-* Model information endpoint for ML lifecycle visibility
+* Add deployment support for production environment
+
+```
+```
