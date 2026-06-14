@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
@@ -28,6 +29,33 @@ def startup_event():
 def home():
     return {
         "message": "H2 Predictive Maintenance API is running"
+    }
+
+@app.get("/model-info")
+def get_model_info():
+    model_path = "models/trained_model.pkl"
+
+    return {
+        "model_name": "Machine Health Risk Prediction Model",
+        "model_type": "RandomForestClassifier",
+        "model_file": model_path,
+        "model_available": os.path.exists(model_path),
+        "input_features": [
+            "temperature",
+            "vibration_total",
+            "rpm"
+        ],
+        "risk_classes": [
+            "NORMAL",
+            "WARNING",
+            "CRITICAL"
+        ],
+        "output": {
+            "risk_level": "Predicted machine health risk",
+            "failure_probability": "Probability of predicted risk class",
+            "probabilities": "Probability values for each class"
+        },
+        "purpose": "Predict machine failure risk using extracted sensor features"
     }
 
 
