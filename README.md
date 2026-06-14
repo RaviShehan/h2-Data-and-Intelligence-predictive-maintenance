@@ -20,6 +20,8 @@ The system receives machine sensor readings, extracts vibration and temperature 
 * `/model-evaluation` endpoint to view saved ML evaluation results
 * Streaming anomaly detection for abnormal sensor behavior
 * Unit tests for prediction logic, API endpoints, ML model, and anomaly detection
+* Feature extraction from vibration and temperature sensor data
+
 
 ## System Flow
 
@@ -86,6 +88,35 @@ Example model output:
   }
 }
 ```
+
+## Feature Extraction
+
+The system extracts useful features from raw machine sensor readings before sending data to the machine learning model.
+
+Raw input values:
+
+* temperature
+* vibration_x
+* vibration_y
+* vibration_z
+* rpm
+
+Extracted features include:
+
+* vibration_total
+* vibration_rms
+* vibration_mean
+* vibration_peak
+* vibration_std
+* temperature_status
+
+These features help the RandomForestClassifier classify the machine health state more accurately.
+
+Feature extraction logic is implemented in:
+
+```text
+features/feature_extraction.py
+
 
 ## Model Lifecycle Metadata
 
@@ -450,6 +481,8 @@ Completed:
 * Unit tests for ML model
 * Unit tests for API endpoints
 * Unit tests for anomaly detection
+* Feature extraction module
+* Unit tests for feature extraction
 
 Future improvements:
 
