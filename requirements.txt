@@ -5,3 +5,4 @@ numpy
 pytest
 requests
 kafka-python
+psycopg2-binary
