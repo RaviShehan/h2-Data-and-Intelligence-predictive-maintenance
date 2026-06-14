@@ -3,7 +3,7 @@ from pydantic import BaseModel
 
 from features.feature_extraction import extract_features
 from models.predict_model import predict_with_model
-from api.validation import validate_sensor_data
+from api.validation import SensorData
 from database.db import init_db, save_prediction, get_recent_predictions
 
 
@@ -34,9 +34,6 @@ def home():
 @app.post("/predict")
 def predict(data: SensorData):
     sensor_data = data.model_dump()
-
-    if not validate_sensor_data(sensor_data):
-        raise HTTPException(status_code=400, detail="Invalid sensor data")
 
     features = extract_features(sensor_data)
     prediction = predict_with_model(features)

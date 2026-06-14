@@ -1,21 +1,10 @@
-def validate_sensor_data(data: dict) -> bool:
-    required_fields = [
-        "machine_id",
-        "temperature",
-        "vibration_x",
-        "vibration_y",
-        "vibration_z",
-        "rpm"
-    ]
+from pydantic import BaseModel, Field
 
-    for field in required_fields:
-        if field not in data:
-            return False
 
-    if data["temperature"] < -20 or data["temperature"] > 150:
-        return False
-
-    if data["rpm"] < 0:
-        return False
-
-    return True
+class SensorData(BaseModel):
+    machine_id: str = Field(..., min_length=1, max_length=50)
+    temperature: float = Field(..., ge=0, le=120)
+    vibration_x: float = Field(..., ge=0, le=5)
+    vibration_y: float = Field(..., ge=0, le=5)
+    vibration_z: float = Field(..., ge=0, le=5)
+    rpm: int = Field(..., ge=0, le=10000)
