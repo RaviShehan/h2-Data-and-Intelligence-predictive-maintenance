@@ -1,3 +1,4 @@
+import json
 from api.anomaly import detect_anomaly
 import os
 from fastapi import FastAPI, HTTPException
@@ -59,6 +60,19 @@ def get_model_info():
         "purpose": "Predict machine failure risk using extracted sensor features"
     }
 
+@app.get("/model-evaluation")
+def get_model_evaluation():
+    report_path = "models/evaluation_report.json"
+
+    if not os.path.exists(report_path):
+        raise HTTPException(
+            status_code=404,
+            detail="Evaluation report not found. Run models/evaluate_model.py first."
+        )
+
+    with open(report_path, "r") as file:
+        return json.load(file)
+
 
 @app.post("/predict")
 def predict(data: SensorData):
@@ -85,7 +99,7 @@ def predict(data: SensorData):
     features = extract_features(sensor_data)
     prediction = predict_with_model(features)
     anomaly = detect_anomaly(features)
-    
+
     prediction_id = save_prediction(sensor_data, features, prediction)
 
     return {
