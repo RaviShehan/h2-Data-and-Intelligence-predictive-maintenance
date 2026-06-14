@@ -173,14 +173,21 @@ This supports real-time monitoring of abnormal machine behavior in the predictiv
 
 ```http
 GET /
+```
 
-Model Information
+This endpoint checks whether the API server is running.
+
+### Model Information
+
+```http
 GET /model-info
+```
 
 This endpoint returns information about the trained machine learning model used by the prediction service.
 
 Example response:
 
+```json
 {
   "model_name": "Machine Health Risk Prediction Model",
   "model_type": "RandomForestClassifier",
@@ -197,7 +204,32 @@ Example response:
     "CRITICAL"
   ]
 }
+```
 
+### Model Evaluation
+
+```http
+GET /model-evaluation
+```
+
+This endpoint returns the saved machine learning model evaluation report.
+
+The response includes:
+
+* Model type
+* Accuracy score
+* Classification report
+* Confusion matrix
+
+Example response:
+
+```json
+{
+  "model_type": "RandomForestClassifier",
+  "accuracy": 1.0,
+  "classification_report": {},
+  "confusion_matrix": []
+}
 ```
 
 ### Predict Machine Risk
@@ -205,6 +237,8 @@ Example response:
 ```http
 POST /predict
 ```
+
+This endpoint receives machine sensor readings, extracts features, predicts machine health risk, performs anomaly detection, and stores the prediction result in PostgreSQL.
 
 Example request:
 
@@ -224,9 +258,41 @@ Example response:
 ```json
 {
   "prediction_id": 1,
-  "risk_level": "CRITICAL",
-  "failure_probability": 0.9,
-  "recommended_action": "Immediate maintenance required"
+  "input": {
+    "machine_id": "MACHINE_01",
+    "temperature": 75,
+    "vibration_x": 1.2,
+    "vibration_y": 1.0,
+    "vibration_z": 1.1,
+    "rpm": 1450
+  },
+  "features": {
+    "machine_id": "MACHINE_01",
+    "temperature": 75,
+    "temperature_status": "HIGH",
+    "vibration_total": 1.91,
+    "vibration_rms": 1.103,
+    "vibration_mean": 1.1,
+    "vibration_peak": 1.2,
+    "vibration_std": 0.082,
+    "rpm": 1450
+  },
+  "prediction": {
+    "machine_id": "MACHINE_01",
+    "risk_level": "CRITICAL",
+    "failure_probability": 1.0,
+    "recommended_action": "Immediate maintenance required",
+    "model_type": "RandomForestClassifier",
+    "probabilities": {
+      "CRITICAL": 1.0,
+      "NORMAL": 0.0,
+      "WARNING": 0.0
+    }
+  },
+  "anomaly_detection": {
+    "is_anomaly": false,
+    "anomaly_reasons": []
+  }
 }
 ```
 
@@ -235,6 +301,9 @@ Example response:
 ```http
 GET /predictions
 ```
+
+This endpoint returns recently stored prediction records from PostgreSQL.
+
 
 ## Environment Variables
 
