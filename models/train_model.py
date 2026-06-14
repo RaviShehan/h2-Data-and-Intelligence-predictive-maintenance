@@ -1,6 +1,9 @@
 import os
 import random
 import math
+import json
+from datetime import datetime
+
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
@@ -10,6 +13,7 @@ import joblib
 
 MODEL_PATH = "models/trained_model.pkl"
 DATA_PATH = "data/training_data.csv"
+METADATA_PATH = "models/model_metadata.json"
 
 
 def calculate_vibration_total(x, y, z):
@@ -24,7 +28,11 @@ def generate_training_data():
         vibration_x = random.uniform(0.1, 0.4)
         vibration_y = random.uniform(0.1, 0.4)
         vibration_z = random.uniform(0.1, 0.4)
-        vibration_total = calculate_vibration_total(vibration_x, vibration_y, vibration_z)
+        vibration_total = calculate_vibration_total(
+            vibration_x,
+            vibration_y,
+            vibration_z
+        )
 
         rows.append({
             "temperature": round(temperature, 2),
@@ -38,7 +46,11 @@ def generate_training_data():
         vibration_x = random.uniform(0.4, 0.8)
         vibration_y = random.uniform(0.4, 0.8)
         vibration_z = random.uniform(0.4, 0.8)
-        vibration_total = calculate_vibration_total(vibration_x, vibration_y, vibration_z)
+        vibration_total = calculate_vibration_total(
+            vibration_x,
+            vibration_y,
+            vibration_z
+        )
 
         rows.append({
             "temperature": round(temperature, 2),
@@ -52,7 +64,11 @@ def generate_training_data():
         vibration_x = random.uniform(1.0, 1.5)
         vibration_y = random.uniform(1.0, 1.5)
         vibration_z = random.uniform(1.0, 1.5)
-        vibration_total = calculate_vibration_total(vibration_x, vibration_y, vibration_z)
+        vibration_total = calculate_vibration_total(
+            vibration_x,
+            vibration_y,
+            vibration_z
+        )
 
         rows.append({
             "temperature": round(temperature, 2),
@@ -62,6 +78,7 @@ def generate_training_data():
         })
 
     df = pd.DataFrame(rows)
+
     os.makedirs("data", exist_ok=True)
     df.to_csv(DATA_PATH, index=False)
 
@@ -98,10 +115,35 @@ def train_model():
     print(classification_report(y_test, predictions))
 
     os.makedirs("models", exist_ok=True)
-    joblib.dump(model, MODEL_PATH)
 
+    joblib.dump(model, MODEL_PATH)
     print(f"Model saved to {MODEL_PATH}")
+
+    metadata = {
+        "model_name": "Machine Health Risk Prediction Model",
+        "model_type": "RandomForestClassifier",
+        "model_file": MODEL_PATH,
+        "training_data": DATA_PATH,
+        "trained_at": datetime.now().isoformat(),
+        "input_features": [
+            "temperature",
+            "vibration_total",
+            "rpm"
+        ],
+        "risk_classes": [
+            "NORMAL",
+            "WARNING",
+            "CRITICAL"
+        ],
+        "accuracy": round(float(accuracy), 4)
+    }
+
+    with open(METADATA_PATH, "w") as file:
+        json.dump(metadata, file, indent=4)
+
+    print(f"Model metadata saved to {METADATA_PATH}")
 
 
 if __name__ == "__main__":
     train_model()
+
