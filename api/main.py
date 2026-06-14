@@ -1,3 +1,4 @@
+from api.anomaly import detect_anomaly
 import os
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
@@ -83,14 +84,16 @@ def predict(data: SensorData):
 
     features = extract_features(sensor_data)
     prediction = predict_with_model(features)
-
+    anomaly = detect_anomaly(features)
+    
     prediction_id = save_prediction(sensor_data, features, prediction)
 
     return {
         "prediction_id": prediction_id,
         "input": sensor_data,
         "features": features,
-        "prediction": prediction
+        "prediction": prediction,
+        "anomaly_detection": anomaly
     }
 
 
