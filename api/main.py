@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 from features.feature_extraction import extract_features
-from api.prediction import predict_risk
+from models.predict_model import predict_with_model
 from api.validation import validate_sensor_data
 from database.db import init_db, save_prediction, get_recent_predictions
 
@@ -39,7 +39,7 @@ def predict(data: SensorData):
         raise HTTPException(status_code=400, detail="Invalid sensor data")
 
     features = extract_features(sensor_data)
-    prediction = predict_risk(features)
+    prediction = predict_with_model(features)
 
     prediction_id = save_prediction(sensor_data, features, prediction)
 
