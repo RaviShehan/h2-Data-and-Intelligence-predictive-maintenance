@@ -1,9 +1,9 @@
 import json
-from api.anomaly import detect_anomaly
 import os
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
 
+from fastapi import FastAPI, HTTPException
+
+from api.anomaly import detect_anomaly
 from features.feature_extraction import extract_features
 from models.predict_model import predict_with_model
 from api.validation import SensorData
@@ -11,15 +11,6 @@ from database.db import init_db, save_prediction, get_recent_predictions
 
 
 app = FastAPI(title="H2 Predictive Maintenance API")
-
-
-class SensorData(BaseModel):
-    machine_id: str
-    temperature: float
-    vibration_x: float
-    vibration_y: float
-    vibration_z: float
-    rpm: int
 
 
 @app.on_event("startup")
@@ -35,30 +26,21 @@ def home():
 
 @app.get("/model-info")
 def get_model_info():
-    model_path = "models/trained_model.pkl"
+    metadata_path = "models/model_metadata.json"
 
-    return {
-        "model_name": "Machine Health Risk Prediction Model",
-        "model_type": "RandomForestClassifier",
-        "model_file": model_path,
-        "model_available": os.path.exists(model_path),
-        "input_features": [
-            "temperature",
-            "vibration_total",
-            "rpm"
-        ],
-        "risk_classes": [
-            "NORMAL",
-            "WARNING",
-            "CRITICAL"
-        ],
-        "output": {
-            "risk_level": "Predicted machine health risk",
-            "failure_probability": "Probability of predicted risk class",
-            "probabilities": "Probability values for each class"
-        },
-        "purpose": "Predict machine failure risk using extracted sensor features"
-    }
+    if not os.path.exists(metadata_path):
+        raise HTTPException(
+            status_code=404,
+            detail="Model metadata not found. Run models/train_model.py first."
+        )
+
+    with open(metadata_path, "r") as file:
+        metadata = json.load(file)
+
+    metadata["model_available"] = os.path.exists(metadata["model_file"])
+
+    return metadata
+
 
 @app.get("/model-evaluation")
 def get_model_evaluation():
