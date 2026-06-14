@@ -24,6 +24,18 @@ def test_model_info_endpoint():
     assert "vibration_total" in data["input_features"]
     assert "rpm" in data["input_features"]
 
+def test_model_evaluation_endpoint():
+    response = client.get("/model-evaluation")
+
+    assert response.status_code == 200
+
+    data = response.json()
+
+    assert data["model_type"] == "RandomForestClassifier"
+    assert "accuracy" in data
+    assert "classification_report" in data
+    assert "confusion_matrix" in data   
+
 
 def test_predict_rejects_invalid_sensor_data():
     invalid_data = {
