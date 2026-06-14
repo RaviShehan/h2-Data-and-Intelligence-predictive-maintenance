@@ -1,14 +1,18 @@
 import os
 import psycopg2
 from psycopg2.extras import Json, RealDictCursor
+from dotenv import load_dotenv
 
+load_dotenv()
 
 DB_HOST = os.getenv("DB_HOST", "localhost")
 DB_PORT = os.getenv("DB_PORT", "5432")
 DB_NAME = os.getenv("DB_NAME", "h2_predictive_maintenance")
 DB_USER = os.getenv("DB_USER", "postgres")
-DB_PASSWORD = os.getenv("DB_PASSWORD", "Ravi12+$")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
 
+if DB_PASSWORD is None:
+    raise ValueError("DB_PASSWORD is missing. Add it to your .env file.")
 
 def get_connection():
     return psycopg2.connect(
