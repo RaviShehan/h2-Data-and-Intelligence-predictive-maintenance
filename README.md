@@ -16,7 +16,7 @@ The system receives machine sensor readings, extracts vibration and temperature 
 * Unit tests for prediction logic
 * RandomForestClassifier ML model for machine risk prediction
 * Prediction probability output for each risk class
-
+* `/model-info` endpoint for ML model lifecycle information
 
 ## System Flow
 
@@ -134,6 +134,31 @@ This helps verify how well the model predicts the three machine health classes:
 
 ```http
 GET /
+
+Model Information
+GET /model-info
+
+This endpoint returns information about the trained machine learning model used by the prediction service.
+
+Example response:
+
+{
+  "model_name": "Machine Health Risk Prediction Model",
+  "model_type": "RandomForestClassifier",
+  "model_file": "models/trained_model.pkl",
+  "model_available": true,
+  "input_features": [
+    "temperature",
+    "vibration_total",
+    "rpm"
+  ],
+  "risk_classes": [
+    "NORMAL",
+    "WARNING",
+    "CRITICAL"
+  ]
+}
+
 ```
 
 ### Predict Machine Risk
@@ -259,3 +284,4 @@ Future improvements:
 * Add advanced signal processing using SciPy
 * Add dashboard integration for H3 team
 * Add model performance evaluation
+* Model information endpoint for ML lifecycle visibility
