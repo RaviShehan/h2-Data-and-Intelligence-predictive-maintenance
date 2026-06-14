@@ -14,6 +14,9 @@ The system receives machine sensor readings, extracts vibration and temperature 
 * PostgreSQL prediction history storage
 * `/predictions` API endpoint to view stored prediction records
 * Unit tests for prediction logic
+* RandomForestClassifier ML model for machine risk prediction
+* Prediction probability output for each risk class
+
 
 ## System Flow
 
@@ -32,6 +35,54 @@ Feature Extraction + Prediction
       ↓
 PostgreSQL Database
 ```
+
+## Machine Learning Model
+
+The prediction service uses a trained machine learning model to classify machine health risk.
+
+### Model Used
+
+* RandomForestClassifier
+* Trained using generated predictive maintenance training data
+* Input features:
+
+  * temperature
+  * vibration_total
+  * rpm
+
+### Model Files
+
+* `data/training_data.csv` - generated training dataset
+* `models/train_model.py` - trains the machine learning model
+* `models/predict_model.py` - loads the trained model and performs prediction
+* `models/trained_model.pkl` - saved trained Random Forest model
+
+### Model Output
+
+The model predicts one of the following machine health states:
+
+* NORMAL
+* WARNING
+* CRITICAL
+
+The API response also includes prediction probabilities for each risk class.
+
+Example model output:
+
+```json
+{
+  "risk_level": "CRITICAL",
+  "failure_probability": 1.0,
+  "model_type": "RandomForestClassifier",
+  "probabilities": {
+    "CRITICAL": 1.0,
+    "NORMAL": 0.0,
+    "WARNING": 0.0
+  }
+}
+```
+
+
 
 ## Tech Stack
 
@@ -167,6 +218,8 @@ Completed:
 * PostgreSQL prediction storage
 * Prediction history endpoint
 * Unit tests
+* RandomForestClassifier model training
+* ML model integration with FastAPI
 
 Future improvements:
 
