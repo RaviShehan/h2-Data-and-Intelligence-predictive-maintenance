@@ -1,0 +1,66 @@
+{
+    "model_type": "RandomForestClassifier",
+    "dataset": "data/training_data.csv",
+    "model_file": "models/trained_model.pkl",
+    "input_features": [
+        "temperature",
+        "vibration_total",
+        "rpm"
+    ],
+    "risk_classes": [
+        "NORMAL",
+        "WARNING",
+        "CRITICAL"
+    ],
+    "accuracy": 1.0,
+    "classification_report": {
+        "CRITICAL": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 24.0
+        },
+        "NORMAL": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 24.0
+        },
+        "WARNING": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 24.0
+        },
+        "accuracy": 1.0,
+        "macro avg": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 72.0
+        },
+        "weighted avg": {
+            "precision": 1.0,
+            "recall": 1.0,
+            "f1-score": 1.0,
+            "support": 72.0
+        }
+    },
+    "confusion_matrix": [
+        [
+            24,
+            0,
+            0
+        ],
+        [
+            0,
+            24,
+            0
+        ],
+        [
+            0,
+            0,
+            24
+        ]
+    ]
+}
