@@ -8,14 +8,17 @@ from features.feature_extraction import extract_features
 from models.predict_model import predict_with_model
 from api.validation import SensorData
 from database.db import init_db, save_prediction, get_recent_predictions
+from contextlib import asynccontextmanager
 
-
-app = FastAPI(title="H2 Predictive Maintenance API")
-
-
-@app.on_event("startup")
-def startup_event():
+@asynccontextmanager
+async def lifespan(app: FastAPI):
     init_db()
+    yield
+
+app = FastAPI(
+    title="H2 Predictive Maintenance API",
+    lifespan=lifespan
+)
 
 
 @app.get("/")
