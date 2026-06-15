@@ -1,5 +1,8 @@
 import math
+
 import numpy as np
+
+from features.signal_processing import extract_signal_features
 
 
 def extract_features(data: dict) -> dict:
@@ -8,6 +11,8 @@ def extract_features(data: dict) -> dict:
         data["vibration_y"],
         data["vibration_z"]
     ])
+
+    signal_features = extract_signal_features(vibration_values)
 
     vibration_total = math.sqrt(
         data["vibration_x"] ** 2 +
@@ -38,5 +43,7 @@ def extract_features(data: dict) -> dict:
         "vibration_mean": round(float(vibration_mean), 3),
         "vibration_peak": round(float(vibration_peak), 3),
         "vibration_std": round(float(vibration_std), 3),
-        "rpm": data["rpm"]
+        "rpm": data["rpm"],
+        **signal_features
     }
+

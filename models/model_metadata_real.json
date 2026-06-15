@@ -3,19 +3,26 @@
     "model_type": "RandomForestClassifier",
     "model_file": "models/trained_model_real.pkl",
     "training_data": "data/training_data_real.csv",
-    "trained_at": "2026-06-15T19:25:43.356393",
+    "trained_at": "2026-06-15T22:00:07.363214",
     "dataset_source": "NASA IMS Bearing Dataset",
     "input_features": [
         "vibration_total",
         "vibration_rms",
         "vibration_mean",
         "vibration_peak",
-        "vibration_std"
+        "vibration_std",
+        "signal_rms",
+        "signal_mean",
+        "signal_peak",
+        "signal_std",
+        "signal_skewness",
+        "signal_kurtosis",
+        "spectral_energy"
     ],
     "risk_classes": [
         "NORMAL",
         "WARNING",
         "CRITICAL"
     ],
-    "accuracy": 0.9289
+    "accuracy": 0.9645
 }

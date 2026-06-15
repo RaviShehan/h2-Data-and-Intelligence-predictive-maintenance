@@ -19,7 +19,14 @@ FEATURE_COLUMNS = [
     "vibration_rms",
     "vibration_mean",
     "vibration_peak",
-    "vibration_std"
+    "vibration_std",
+    "signal_rms",
+    "signal_mean",
+    "signal_peak",
+    "signal_std",
+    "signal_skewness",
+    "signal_kurtosis",
+    "spectral_energy"
 ]
 
 
@@ -48,7 +55,7 @@ def train_real_model():
 
     accuracy = accuracy_score(y_test, predictions)
 
-    print("Real NASA IMS model training completed")
+    print("Real NASA IMS model training completed with SciPy signal features")
     print("Accuracy:", round(accuracy, 4))
     print(classification_report(y_test, predictions))
 

@@ -1,16 +1,25 @@
 import os
+
 import joblib
 import pandas as pd
 
 
 MODEL_PATH = "models/trained_model_real.pkl"
 
+
 FEATURE_COLUMNS = [
     "vibration_total",
     "vibration_rms",
     "vibration_mean",
     "vibration_peak",
-    "vibration_std"
+    "vibration_std",
+    "signal_rms",
+    "signal_mean",
+    "signal_peak",
+    "signal_std",
+    "signal_skewness",
+    "signal_kurtosis",
+    "spectral_energy"
 ]
 
 
@@ -27,11 +36,8 @@ def predict_with_real_model(features: dict) -> dict:
     model = load_real_model()
 
     input_data = pd.DataFrame([{
-        "vibration_total": features["vibration_total"],
-        "vibration_rms": features["vibration_rms"],
-        "vibration_mean": features["vibration_mean"],
-        "vibration_peak": features["vibration_peak"],
-        "vibration_std": features["vibration_std"]
+        column: features[column]
+        for column in FEATURE_COLUMNS
     }])
 
     risk_level = model.predict(input_data)[0]
@@ -62,3 +68,4 @@ def predict_with_real_model(features: dict) -> dict:
         "dataset_source": "NASA IMS Bearing Dataset",
         "probabilities": probability_map
     }
+

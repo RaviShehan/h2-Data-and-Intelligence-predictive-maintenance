@@ -4,6 +4,8 @@ import math
 import numpy as np
 import pandas as pd
 
+from features.signal_processing import extract_signal_features
+
 
 RAW_DATA_DIR = "data/raw/IMS/extracted/2nd_test/2nd_test"
 OUTPUT_PATH = "data/training_data_real.csv"
@@ -56,7 +58,9 @@ def prepare_real_dataset():
             continue
 
         values = read_vibration_file(file_path)
-        features = extract_real_features(values)
+
+        vibration_features = extract_real_features(values)
+        signal_features = extract_signal_features(values)
 
         risk_level = assign_risk_level(index, len(files))
 
@@ -64,7 +68,8 @@ def prepare_real_dataset():
             "source_file": filename,
             "temperature": 0,
             "rpm": 0,
-            **features,
+            **vibration_features,
+            **signal_features,
             "risk_level": risk_level
         }
 
@@ -75,9 +80,12 @@ def prepare_real_dataset():
     os.makedirs("data", exist_ok=True)
     df.to_csv(OUTPUT_PATH, index=False)
 
-    print("Real IMS dataset prepared")
+    print("Real IMS dataset prepared with SciPy signal features")
     print(f"Total rows: {len(df)}")
     print(f"Saved to: {OUTPUT_PATH}")
+    print()
+    print("Columns:")
+    print(df.columns.tolist())
     print()
     print(df["risk_level"].value_counts())
 
