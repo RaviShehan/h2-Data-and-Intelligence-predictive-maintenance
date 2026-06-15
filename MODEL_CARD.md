@@ -4,7 +4,7 @@
 
 This model is used in the H2 Data Intelligence component of the Predictive Maintenance System.
 
-The model predicts machine health risk using vibration features extracted from the NASA IMS Bearing Dataset.
+The model predicts machine health risk using vibration and SciPy-based signal features extracted from the NASA IMS Bearing Dataset.
 
 ## Model Type
 
@@ -30,13 +30,20 @@ data/raw/
 
 ## Input Features
 
-The model uses the following vibration-based features:
+The model uses the following vibration and signal-processing features:
 
 * vibration_total
 * vibration_rms
 * vibration_mean
 * vibration_peak
 * vibration_std
+* signal_rms
+* signal_mean
+* signal_peak
+* signal_std
+* signal_skewness
+* signal_kurtosis
+* spectral_energy
 
 ## Output Classes
 
@@ -51,8 +58,10 @@ The model predicts one of the following machine health states:
 Current real-data model accuracy:
 
 ```text
-0.9289
+0.9645
 ```
+
+The accuracy improved after adding SciPy-based statistical and frequency-domain signal features.
 
 The model evaluation report is saved in:
 
@@ -62,6 +71,7 @@ models/evaluation_report_real.json
 
 ## Model Files
 
+* `models/prepare_real_ims_data.py`
 * `models/train_real_model.py`
 * `models/predict_real_model.py`
 * `models/trained_model_real.pkl`
@@ -85,13 +95,13 @@ The API response includes:
 
 * The current real-data model uses only the `2nd_test` subset of the NASA IMS dataset.
 * The labels NORMAL, WARNING, and CRITICAL are assigned based on degradation progress.
-* Temperature and RPM are used in the API pipeline, but the real NASA IMS model mainly uses vibration features.
-* Future versions can improve accuracy and realism by using all IMS test sets and more advanced signal processing.
+* Temperature and RPM are used in the API pipeline, but the real NASA IMS model mainly uses vibration and signal-processing features.
+* Future versions can improve realism by using all IMS test sets and more advanced signal-processing methods.
 
 ## Future Improvements
 
 * Train using all IMS test sets
 * Add MLflow model tracking
-* Add SciPy-based frequency-domain features
+* Add more SciPy-based frequency-domain features
 * Add model versioning
 * Add dashboard visualization for model predictions
