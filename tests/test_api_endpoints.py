@@ -35,6 +35,9 @@ def test_model_evaluation_endpoint():
     data = response.json()
 
     assert data["model_type"] == "RandomForestClassifier"
+    assert data["dataset_source"] == "NASA IMS Bearing Dataset"
+    assert data["dataset"] == "data/training_data_real.csv"
+    assert data["model_file"] == "models/trained_model_real.pkl"
     assert "accuracy" in data
     assert "classification_report" in data
     assert "confusion_matrix" in data   
