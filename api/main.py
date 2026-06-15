@@ -5,7 +5,7 @@ from fastapi import FastAPI, HTTPException
 
 from api.anomaly import detect_anomaly
 from features.feature_extraction import extract_features
-from models.predict_model import predict_with_model
+from models.predict_real_model import predict_with_real_model
 from api.validation import SensorData
 from database.db import init_db, save_prediction, get_recent_predictions
 from contextlib import asynccontextmanager
@@ -82,7 +82,7 @@ def predict(data: SensorData):
         raise HTTPException(status_code=422, detail="rpm must be between 0 and 10000")
 
     features = extract_features(sensor_data)
-    prediction = predict_with_model(features)
+    prediction = predict_with_real_model(features)
     anomaly = detect_anomaly(features)
 
     prediction_id = save_prediction(sensor_data, features, prediction, anomaly)

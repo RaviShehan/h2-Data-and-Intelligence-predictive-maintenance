@@ -1,0 +1,21 @@
+{
+    "model_name": "NASA IMS Bearing Risk Prediction Model",
+    "model_type": "RandomForestClassifier",
+    "model_file": "models/trained_model_real.pkl",
+    "training_data": "data/training_data_real.csv",
+    "trained_at": "2026-06-15T19:25:43.356393",
+    "dataset_source": "NASA IMS Bearing Dataset",
+    "input_features": [
+        "vibration_total",
+        "vibration_rms",
+        "vibration_mean",
+        "vibration_peak",
+        "vibration_std"
+    ],
+    "risk_classes": [
+        "NORMAL",
+        "WARNING",
+        "CRITICAL"
+    ],
+    "accuracy": 0.9289
+}
