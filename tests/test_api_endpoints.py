@@ -26,6 +26,13 @@ def test_model_info_endpoint():
     assert "vibration_mean" in data["input_features"]
     assert "vibration_peak" in data["input_features"]
     assert "vibration_std" in data["input_features"]
+    assert "signal_rms" in data["input_features"]
+    assert "signal_mean" in data["input_features"]
+    assert "signal_peak" in data["input_features"]
+    assert "signal_std" in data["input_features"]
+    assert "signal_skewness" in data["input_features"]
+    assert "signal_kurtosis" in data["input_features"]
+    assert "spectral_energy" in data["input_features"]
 
 def test_model_evaluation_endpoint():
     response = client.get("/model-evaluation")
@@ -75,6 +82,13 @@ def test_predict_endpoint_uses_real_nasa_model():
 
     assert "prediction_id" in data
     assert "features" in data
+    assert "signal_rms" in data["features"]
+    assert "signal_mean" in data["features"]
+    assert "signal_peak" in data["features"]
+    assert "signal_std" in data["features"]
+    assert "signal_skewness" in data["features"]
+    assert "signal_kurtosis" in data["features"]
+    assert "spectral_energy" in data["features"]
     assert "prediction" in data
     assert "anomaly_detection" in data
 
