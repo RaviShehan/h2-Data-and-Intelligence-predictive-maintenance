@@ -1,0 +1,54 @@
+{
+    "model_type": "RandomForestClassifier",
+    "dataset_source": "NASA IMS Bearing Dataset",
+    "feature_importance": [
+        {
+            "feature": "vibration_rms",
+            "importance": 0.180217
+        },
+        {
+            "feature": "signal_rms",
+            "importance": 0.169447
+        },
+        {
+            "feature": "vibration_std",
+            "importance": 0.15747
+        },
+        {
+            "feature": "vibration_total",
+            "importance": 0.134542
+        },
+        {
+            "feature": "signal_std",
+            "importance": 0.131432
+        },
+        {
+            "feature": "spectral_energy",
+            "importance": 0.101141
+        },
+        {
+            "feature": "signal_kurtosis",
+            "importance": 0.049811
+        },
+        {
+            "feature": "signal_skewness",
+            "importance": 0.037067
+        },
+        {
+            "feature": "signal_peak",
+            "importance": 0.013113
+        },
+        {
+            "feature": "vibration_mean",
+            "importance": 0.008952
+        },
+        {
+            "feature": "signal_mean",
+            "importance": 0.008562
+        },
+        {
+            "feature": "vibration_peak",
+            "importance": 0.008246
+        }
+    ]
+}
