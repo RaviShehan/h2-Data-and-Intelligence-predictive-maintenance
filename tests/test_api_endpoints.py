@@ -56,3 +56,29 @@ def test_predict_rejects_invalid_sensor_data():
     response = client.post("/predict", json=invalid_data)
 
     assert response.status_code == 422
+
+def test_predict_endpoint_uses_real_nasa_model():
+    sensor_data = {
+        "machine_id": "MACHINE_01",
+        "temperature": 75,
+        "vibration_x": 1.2,
+        "vibration_y": 1.0,
+        "vibration_z": 1.1,
+        "rpm": 1450
+    }
+
+    response = client.post("/predict", json=sensor_data)
+
+    assert response.status_code == 200
+
+    data = response.json()
+
+    assert "prediction_id" in data
+    assert "features" in data
+    assert "prediction" in data
+    assert "anomaly_detection" in data
+
+    assert data["prediction"]["model_type"] == "RandomForestClassifier"
+    assert data["prediction"]["dataset_source"] == "NASA IMS Bearing Dataset"
+    assert data["prediction"]["risk_level"] in ["NORMAL", "WARNING", "CRITICAL"]
+    assert "probabilities" in data["prediction"]
