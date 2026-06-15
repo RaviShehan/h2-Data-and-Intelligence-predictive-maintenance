@@ -29,13 +29,13 @@ def home():
 
 @app.get("/model-info")
 def get_model_info():
-    metadata_path = "models/model_metadata.json"
-
+    metadata_path = "models/model_metadata_real.json"
+    
     if not os.path.exists(metadata_path):
         raise HTTPException(
             status_code=404,
-            detail="Model metadata not found. Run models/train_model.py first."
-        )
+            detail="Real model metadata not found. Run models/train_real_model.py first."        
+            )
 
     with open(metadata_path, "r") as file:
         metadata = json.load(file)

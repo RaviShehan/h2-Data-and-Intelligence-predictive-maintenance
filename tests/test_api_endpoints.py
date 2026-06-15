@@ -19,10 +19,13 @@ def test_model_info_endpoint():
     data = response.json()
 
     assert data["model_type"] == "RandomForestClassifier"
+    assert data["dataset_source"] == "NASA IMS Bearing Dataset"
     assert data["model_available"] is True
-    assert "temperature" in data["input_features"]
     assert "vibration_total" in data["input_features"]
-    assert "rpm" in data["input_features"]
+    assert "vibration_rms" in data["input_features"]
+    assert "vibration_mean" in data["input_features"]
+    assert "vibration_peak" in data["input_features"]
+    assert "vibration_std" in data["input_features"]
 
 def test_model_evaluation_endpoint():
     response = client.get("/model-evaluation")
