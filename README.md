@@ -70,6 +70,30 @@ models/prepare_real_ims_data.py
 
 This script reads vibration files from the IMS dataset, extracts signal features, assigns machine health labels, and creates the real training dataset.
 
+
+## Dataset Documentation
+
+A separate dataset documentation file is included to explain how the NASA IMS Bearing Dataset is used in this project.
+
+Dataset documentation file:
+
+```text
+DATASET.md
+```
+
+The dataset documentation explains:
+
+* Dataset source
+* Raw dataset location
+* Processed training dataset
+* Preprocessing script
+* Extracted vibration features
+* Labeling method
+* Model training and evaluation files
+* Why raw data is not uploaded to GitHub
+
+
+
 ## Feature Extraction
 
 The system extracts useful features from raw machine sensor readings before sending data to the machine learning model.
@@ -612,7 +636,7 @@ Completed:
 * Real NASA IMS model evaluation report
 * API test proving `/predict` uses NASA IMS trained model
 * Model card for NASA IMS prediction model
-
+* Dataset documentation for NASA IMS Bearing Dataset
 
 
 
