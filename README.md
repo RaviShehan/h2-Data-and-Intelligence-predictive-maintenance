@@ -326,31 +326,46 @@ Example response:
 }
 ```
 
-### Model Evaluation
+## Model Evaluation
 
-```http
-GET /model-evaluation
+The real-data RandomForestClassifier model can be evaluated using the processed NASA IMS Bearing Dataset.
+
+Evaluation script:
+
+```text
+models/evaluate_real_model.py
 ```
 
-This endpoint returns the saved machine learning model evaluation report.
+Run real model evaluation:
 
-The response includes:
+```bash
+venv\Scripts\python.exe models/evaluate_real_model.py
+```
 
-* Model type
+The evaluation output includes:
+
 * Accuracy score
 * Classification report
 * Confusion matrix
 
-Example response:
+The real evaluation result is saved to:
 
-```json
-{
-  "model_type": "RandomForestClassifier",
-  "accuracy": 1.0,
-  "classification_report": {},
-  "confusion_matrix": []
-}
+```text
+models/evaluation_report_real.json
 ```
+
+Current real model accuracy:
+
+```text
+0.9289
+```
+
+This verifies how well the model predicts the three machine health classes:
+
+* NORMAL
+* WARNING
+* CRITICAL
+
 
 ### Predict Machine Risk
 
@@ -539,7 +554,7 @@ venv\Scripts\python.exe -m pytest tests
 Expected result:
 
 ```text
-13 passed
+14 passed
 ```
 
 ## Project Status
@@ -566,6 +581,8 @@ Completed:
 * Unit tests for API endpoints
 * Unit tests for anomaly detection
 * Unit tests for feature extraction
+* Unit test for real NASA IMS trained model
+* Real NASA IMS model evaluation report
 
 Future improvements:
 
