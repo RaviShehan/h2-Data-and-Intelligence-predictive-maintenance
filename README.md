@@ -170,6 +170,32 @@ Example model output:
 }
 ```
 
+## Model Card
+
+A model card is included to document the real NASA IMS Bearing prediction model.
+
+Model card file:
+
+```text
+MODEL_CARD.md
+```
+
+The model card explains:
+
+* Dataset used
+* Model type
+* Input features
+* Output classes
+* Model performance
+* API integration
+* Current limitations
+* Future improvements
+
+This helps make the machine learning part more transparent and report-ready.
+
+
+
+
 ## Model Lifecycle Metadata
 
 The system stores model lifecycle information in metadata files after model training.
@@ -585,6 +611,10 @@ Completed:
 * Unit test for real NASA IMS trained model
 * Real NASA IMS model evaluation report
 * API test proving `/predict` uses NASA IMS trained model
+* Model card for NASA IMS prediction model
+
+
+
 
 Future improvements:
 
