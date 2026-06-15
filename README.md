@@ -14,6 +14,7 @@ The system receives machine sensor readings, extracts vibration and temperature 
 * PostgreSQL prediction history storage
 * `/predictions` API endpoint to view stored prediction records
 * Feature extraction from vibration and temperature sensor data
+* SciPy-based signal feature extraction
 * RandomForestClassifier ML model for machine risk prediction
 * Real NASA IMS Bearing Dataset based model training
 * Prediction probability output for each risk class
@@ -21,10 +22,9 @@ The system receives machine sensor readings, extracts vibration and temperature 
 * `/model-info` endpoint for ML model lifecycle information
 * `/model-evaluation` endpoint to view saved ML evaluation results
 * Streaming anomaly detection for abnormal sensor behavior
-* Unit tests for prediction logic, API endpoints, ML model, feature extraction, and anomaly detection
 * API tests verifying real NASA IMS model integration
 * Tests verifying real NASA IMS processed dataset structure
-
+* Unit tests for prediction logic, API endpoints, ML model, feature extraction, signal processing, and anomaly detection
 
 ## System Flow
 
@@ -40,6 +40,8 @@ Kafka Consumer
 FastAPI /predict Endpoint
       ↓
 Feature Extraction
+      ↓
+SciPy Signal Features
       ↓
 Real-Data ML Prediction + Anomaly Detection
       ↓
@@ -70,8 +72,7 @@ The real-data preprocessing script is:
 models/prepare_real_ims_data.py
 ```
 
-This script reads vibration files from the IMS dataset, extracts signal features, assigns machine health labels, and creates the real training dataset.
-
+This script reads vibration files from the IMS dataset, extracts vibration and signal-processing features, assigns machine health labels, and creates the real training dataset.
 
 ## Dataset Documentation
 
@@ -93,8 +94,6 @@ The dataset documentation explains:
 * Labeling method
 * Model training and evaluation files
 * Why raw data is not uploaded to GitHub
-
-
 
 ## Feature Extraction
 
@@ -131,7 +130,6 @@ tests/test_feature_extraction.py
 
 These features help the RandomForestClassifier classify the machine health state more accurately.
 
-
 ## SciPy Signal Processing
 
 The project includes a SciPy-based signal processing module for extracting statistical and frequency-domain features from vibration signals.
@@ -140,7 +138,31 @@ Signal processing logic is implemented in:
 
 ```text
 features/signal_processing.py
+```
 
+The extracted signal features include:
+
+* signal_rms
+* signal_mean
+* signal_peak
+* signal_std
+* signal_skewness
+* signal_kurtosis
+* spectral_energy
+
+The module uses:
+
+* NumPy for numerical calculations
+* SciPy for skewness and kurtosis calculations
+* FFT-based spectral energy for frequency-domain analysis
+
+Signal processing tests are implemented in:
+
+```text
+tests/test_signal_processing.py
+```
+
+This supports the H2 requirement of feature extraction from vibration signals using SciPy.
 
 ## Machine Learning Model
 
@@ -150,6 +172,7 @@ The prediction service uses a trained machine learning model to classify machine
 
 * RandomForestClassifier
 * Trained using real NASA IMS Bearing Dataset vibration data
+* Enhanced using SciPy-based statistical and frequency-domain signal features
 * Input features:
 
   * vibration_total
@@ -157,6 +180,13 @@ The prediction service uses a trained machine learning model to classify machine
   * vibration_mean
   * vibration_peak
   * vibration_std
+  * signal_rms
+  * signal_mean
+  * signal_peak
+  * signal_std
+  * signal_skewness
+  * signal_kurtosis
+  * spectral_energy
 
 ### Real Model Files
 
@@ -170,13 +200,15 @@ The prediction service uses a trained machine learning model to classify machine
 
 ### Real Model Performance
 
-The real-data model was trained using vibration features extracted from the NASA IMS Bearing Dataset.
+The real-data model was trained using vibration and SciPy signal-processing features extracted from the NASA IMS Bearing Dataset.
 
 Current real model accuracy:
 
 ```text
-0.9289
+0.9645
 ```
+
+After adding SciPy-based statistical and frequency-domain signal features, the real NASA IMS model accuracy improved to 0.9645.
 
 This means the system now uses a real predictive maintenance dataset instead of only generated sample data.
 
@@ -230,9 +262,6 @@ The model card explains:
 
 This helps make the machine learning part more transparent and report-ready.
 
-
-
-
 ## Model Lifecycle Metadata
 
 The system stores model lifecycle information in metadata files after model training.
@@ -259,18 +288,18 @@ This helps track which model version is currently used by the prediction API.
 
 ## Model Evaluation
 
-The trained RandomForestClassifier model can be evaluated using the saved training dataset.
+The real-data RandomForestClassifier model can be evaluated using the processed NASA IMS Bearing Dataset.
 
 Evaluation script:
 
 ```text
-models/evaluate_model.py
+models/evaluate_real_model.py
 ```
 
-Run model evaluation:
+Run real model evaluation:
 
 ```bash
-venv\Scripts\python.exe models/evaluate_model.py
+venv\Scripts\python.exe models/evaluate_real_model.py
 ```
 
 The evaluation output includes:
@@ -279,13 +308,19 @@ The evaluation output includes:
 * Classification report
 * Confusion matrix
 
-The evaluation result is also saved to:
+The real evaluation result is saved to:
 
 ```text
-models/evaluation_report.json
+models/evaluation_report_real.json
 ```
 
-This helps verify how well the model predicts the three machine health classes:
+Current real model accuracy:
+
+```text
+0.9645
+```
+
+This verifies how well the model predicts the three machine health classes:
 
 * NORMAL
 * WARNING
@@ -342,9 +377,9 @@ This supports real-time monitoring of abnormal machine behavior in the predictiv
 * scikit-learn
 * pandas
 * NumPy
+* SciPy
 * joblib
 * httpx
-* SciPy
 
 ## API Endpoints
 
@@ -379,58 +414,54 @@ Example response:
     "vibration_rms",
     "vibration_mean",
     "vibration_peak",
-    "vibration_std"
+    "vibration_std",
+    "signal_rms",
+    "signal_mean",
+    "signal_peak",
+    "signal_std",
+    "signal_skewness",
+    "signal_kurtosis",
+    "spectral_energy"
   ],
   "risk_classes": [
     "NORMAL",
     "WARNING",
     "CRITICAL"
   ],
-  "accuracy": 0.9289,
+  "accuracy": 0.9645,
   "model_available": true
 }
 ```
 
-## Model Evaluation
+### Model Evaluation
 
-The real-data RandomForestClassifier model can be evaluated using the processed NASA IMS Bearing Dataset.
-
-Evaluation script:
-
-```text
-models/evaluate_real_model.py
+```http
+GET /model-evaluation
 ```
 
-Run real model evaluation:
+This endpoint returns the saved real machine learning model evaluation report.
 
-```bash
-venv\Scripts\python.exe models/evaluate_real_model.py
-```
+The response includes:
 
-The evaluation output includes:
-
+* Model type
+* Dataset source
 * Accuracy score
 * Classification report
 * Confusion matrix
 
-The real evaluation result is saved to:
+Example response:
 
-```text
-models/evaluation_report_real.json
+```json
+{
+  "model_type": "RandomForestClassifier",
+  "dataset_source": "NASA IMS Bearing Dataset",
+  "dataset": "data/training_data_real.csv",
+  "model_file": "models/trained_model_real.pkl",
+  "accuracy": 0.9645,
+  "classification_report": {},
+  "confusion_matrix": []
+}
 ```
-
-Current real model accuracy:
-
-```text
-0.9289
-```
-
-This verifies how well the model predicts the three machine health classes:
-
-* NORMAL
-* WARNING
-* CRITICAL
-
 
 ### Predict Machine Risk
 
@@ -475,7 +506,14 @@ Example response:
     "vibration_mean": 1.1,
     "vibration_peak": 1.2,
     "vibration_std": 0.082,
-    "rpm": 1450
+    "rpm": 1450,
+    "signal_rms": 1.103025,
+    "signal_mean": 1.1,
+    "signal_peak": 1.2,
+    "signal_std": 0.08165,
+    "signal_skewness": 0.0,
+    "signal_kurtosis": -1.5,
+    "spectral_energy": 10.95
   },
   "prediction": {
     "machine_id": "MACHINE_01",
@@ -572,7 +610,7 @@ data/raw/
 Then run:
 
 ```bash
-venv\Scripts\python.exe models/prepare_real_ims_data.py
+venv\Scripts\python.exe -m models.prepare_real_ims_data
 ```
 
 This generates:
@@ -598,16 +636,16 @@ This generates:
 venv\Scripts\python.exe -m models.test_real_model_prediction
 ```
 
-### 8. Evaluate ML Model
+### 8. Evaluate Real ML Model
 
 ```bash
-venv\Scripts\python.exe models/evaluate_model.py
+venv\Scripts\python.exe models/evaluate_real_model.py
 ```
 
 This generates:
 
 ```text
-models/evaluation_report.json
+models/evaluation_report_real.json
 ```
 
 ## Run Tests
@@ -631,35 +669,33 @@ Completed:
 * PostgreSQL prediction storage
 * Prediction history endpoint
 * Feature extraction module
+* SciPy signal processing module
 * RandomForestClassifier model training
 * NASA IMS real dataset preprocessing
 * Real-data RandomForestClassifier training
+* SciPy-enhanced real-data model training
 * FastAPI connected to real-data trained model
 * Prediction probability output
 * Model lifecycle metadata generation
 * `/model-info` endpoint for model lifecycle information
-* Model evaluation report generation
+* Real model evaluation report generation
 * `/model-evaluation` endpoint
 * Streaming anomaly detection module
+* Model card for NASA IMS prediction model
+* Dataset documentation for NASA IMS Bearing Dataset
 * Unit tests for prediction logic
 * Unit tests for ML model
 * Unit tests for API endpoints
 * Unit tests for anomaly detection
 * Unit tests for feature extraction
-* Unit test for real NASA IMS trained model
-* Real NASA IMS model evaluation report
-* API test proving `/predict` uses NASA IMS trained model
-* Model card for NASA IMS prediction model
-* Dataset documentation for NASA IMS Bearing Dataset
-* Unit tests for real NASA IMS processed dataset
-* SciPy signal processing module
 * Unit tests for signal processing features
-
+* Unit tests for real NASA IMS processed dataset
+* Unit test for real NASA IMS trained model
+* API test proving `/predict` uses NASA IMS trained model
 
 Future improvements:
 
 * Add MLflow model tracking
-* Add advanced signal processing using SciPy
 * Add dashboard integration for H3 team
 * Add deployment support for production environment
 * Train using all IMS test sets instead of only `2nd_test`
