@@ -23,6 +23,8 @@ The system receives machine sensor readings, extracts vibration and temperature 
 * Streaming anomaly detection for abnormal sensor behavior
 * Unit tests for prediction logic, API endpoints, ML model, feature extraction, and anomaly detection
 * API tests verifying real NASA IMS model integration
+* Tests verifying real NASA IMS processed dataset structure
+
 
 ## System Flow
 
@@ -605,7 +607,7 @@ venv\Scripts\python.exe -m pytest tests
 Expected result:
 
 ```text
-14 passed
+19 passed
 ```
 
 ## Project Status
@@ -637,7 +639,7 @@ Completed:
 * API test proving `/predict` uses NASA IMS trained model
 * Model card for NASA IMS prediction model
 * Dataset documentation for NASA IMS Bearing Dataset
-
+* Unit tests for real NASA IMS processed dataset
 
 
 Future improvements:
