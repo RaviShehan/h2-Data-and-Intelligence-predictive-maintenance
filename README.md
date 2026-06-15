@@ -13,15 +13,15 @@ The system receives machine sensor readings, extracts vibration and temperature 
 * Kafka consumer for receiving sensor data
 * PostgreSQL prediction history storage
 * `/predictions` API endpoint to view stored prediction records
+* Feature extraction from vibration and temperature sensor data
 * RandomForestClassifier ML model for machine risk prediction
+* Real NASA IMS Bearing Dataset based model training
 * Prediction probability output for each risk class
-* Model lifecycle metadata using `model_metadata.json`
+* Model lifecycle metadata
 * `/model-info` endpoint for ML model lifecycle information
 * `/model-evaluation` endpoint to view saved ML evaluation results
 * Streaming anomaly detection for abnormal sensor behavior
-* Unit tests for prediction logic, API endpoints, ML model, and anomaly detection
-* Feature extraction from vibration and temperature sensor data
-
+* Unit tests for prediction logic, API endpoints, ML model, feature extraction, and anomaly detection
 
 ## System Flow
 
@@ -38,62 +38,42 @@ FastAPI /predict Endpoint
       ↓
 Feature Extraction
       ↓
-ML Prediction + Anomaly Detection
+Real-Data ML Prediction + Anomaly Detection
       ↓
 PostgreSQL Database
 ```
 
-## Machine Learning Model
+## Real Dataset
 
-The prediction service uses a trained machine learning model to classify machine health risk.
+The project uses the NASA IMS Bearing Dataset as the real predictive maintenance dataset.
 
-### Model Used
+The raw dataset is stored locally inside:
 
-* RandomForestClassifier
-* Trained using generated predictive maintenance training data
-* Input features:
-
-  * temperature
-  * vibration_total
-  * rpm
-
-### Model Files
-
-* `data/training_data.csv` - generated training dataset
-* `models/train_model.py` - trains the machine learning model
-* `models/predict_model.py` - loads the trained model and performs prediction
-* `models/trained_model.pkl` - saved trained Random Forest model
-
-### Model Output
-
-The model predicts one of the following machine health states:
-
-* NORMAL
-* WARNING
-* CRITICAL
-
-The API response also includes prediction probabilities for each risk class.
-
-Example model output:
-
-```json
-{
-  "risk_level": "CRITICAL",
-  "failure_probability": 1.0,
-  "model_type": "RandomForestClassifier",
-  "probabilities": {
-    "CRITICAL": 1.0,
-    "NORMAL": 0.0,
-    "WARNING": 0.0
-  }
-}
+```text
+data/raw/
 ```
+
+This folder is ignored by Git because the raw dataset is large and should not be uploaded to GitHub.
+
+The raw IMS vibration files are processed into a smaller CSV file:
+
+```text
+data/training_data_real.csv
+```
+
+The real-data preprocessing script is:
+
+```text
+models/prepare_real_ims_data.py
+```
+
+This script reads vibration files from the IMS dataset, extracts signal features, assigns machine health labels, and creates the real training dataset.
 
 ## Feature Extraction
 
 The system extracts useful features from raw machine sensor readings before sending data to the machine learning model.
 
-Raw input values:
+Raw input values from the API:
 
 * temperature
 * vibration_x
@@ -110,22 +90,93 @@ Extracted features include:
 * vibration_std
 * temperature_status
 
-These features help the RandomForestClassifier classify the machine health state more accurately.
-
 Feature extraction logic is implemented in:
 
 ```text
 features/feature_extraction.py
+```
 
+Feature extraction is tested using:
+
+```text
+tests/test_feature_extraction.py
+```
+
+These features help the RandomForestClassifier classify the machine health state more accurately.
+
+## Machine Learning Model
+
+The prediction service uses a trained machine learning model to classify machine health risk.
+
+### Active Model Used
+
+* RandomForestClassifier
+* Trained using real NASA IMS Bearing Dataset vibration data
+* Input features:
+
+  * vibration_total
+  * vibration_rms
+  * vibration_mean
+  * vibration_peak
+  * vibration_std
+
+### Real Model Files
+
+* `data/training_data_real.csv` - processed NASA IMS training dataset
+* `models/prepare_real_ims_data.py` - converts raw IMS vibration files into a training CSV
+* `models/train_real_model.py` - trains the real-data machine learning model
+* `models/predict_real_model.py` - loads the real-data model and performs prediction
+* `models/trained_model_real.pkl` - saved RandomForestClassifier model trained using NASA IMS data
+* `models/model_metadata_real.json` - metadata for the real-data model
+* `models/test_real_model_prediction.py` - simple script to test real model prediction
+
+### Real Model Performance
+
+The real-data model was trained using vibration features extracted from the NASA IMS Bearing Dataset.
+
+Current real model accuracy:
+
+```text
+0.9289
+```
+
+This means the system now uses a real predictive maintenance dataset instead of only generated sample data.
+
+### Model Output
+
+The model predicts one of the following machine health states:
+
+* NORMAL
+* WARNING
+* CRITICAL
+
+The API response also includes prediction probabilities for each risk class.
+
+Example model output:
+
+```json
+{
+  "risk_level": "CRITICAL",
+  "failure_probability": 0.46,
+  "recommended_action": "Immediate maintenance required",
+  "model_type": "RandomForestClassifier",
+  "dataset_source": "NASA IMS Bearing Dataset",
+  "probabilities": {
+    "CRITICAL": 0.46,
+    "NORMAL": 0.21,
+    "WARNING": 0.33
+  }
+}
+```
 
 ## Model Lifecycle Metadata
 
-The system stores model lifecycle information in a metadata file after model training.
+The system stores model lifecycle information in metadata files after model training.
 
-Metadata file:
+Real model metadata file:
 
 ```text
-models/model_metadata.json
+models/model_metadata_real.json
 ```
 
 The metadata file includes:
@@ -135,11 +186,10 @@ The metadata file includes:
 * Model file path
 * Training dataset path
 * Training timestamp
+* Dataset source
 * Input features
 * Risk classes
 * Accuracy score
-
-The `/model-info` endpoint reads this metadata file and returns the latest available model lifecycle information.
 
 This helps track which model version is currently used by the prediction API.
 
@@ -247,28 +297,31 @@ This endpoint checks whether the API server is running.
 GET /model-info
 ```
 
-This endpoint returns model lifecycle metadata from `models/model_metadata.json`.
+This endpoint returns machine learning model lifecycle information.
 
 Example response:
 
 ```json
 {
-  "model_name": "Machine Health Risk Prediction Model",
+  "model_name": "NASA IMS Bearing Risk Prediction Model",
   "model_type": "RandomForestClassifier",
-  "model_file": "models/trained_model.pkl",
-  "training_data": "data/training_data.csv",
-  "trained_at": "2026-06-14T16:30:00",
+  "model_file": "models/trained_model_real.pkl",
+  "training_data": "data/training_data_real.csv",
+  "dataset_source": "NASA IMS Bearing Dataset",
+  "trained_at": "2026-06-15T14:00:00",
   "input_features": [
-    "temperature",
     "vibration_total",
-    "rpm"
+    "vibration_rms",
+    "vibration_mean",
+    "vibration_peak",
+    "vibration_std"
   ],
   "risk_classes": [
     "NORMAL",
     "WARNING",
     "CRITICAL"
   ],
-  "accuracy": 1.0,
+  "accuracy": 0.9289,
   "model_available": true
 }
 ```
@@ -305,7 +358,7 @@ Example response:
 POST /predict
 ```
 
-This endpoint receives machine sensor readings, extracts features, predicts machine health risk, performs anomaly detection, and stores the prediction result in PostgreSQL.
+This endpoint receives machine sensor readings, extracts features, predicts machine health risk using the real-data trained model, performs anomaly detection, and stores the prediction result in PostgreSQL.
 
 Example request:
 
@@ -347,13 +400,14 @@ Example response:
   "prediction": {
     "machine_id": "MACHINE_01",
     "risk_level": "CRITICAL",
-    "failure_probability": 1.0,
+    "failure_probability": 0.46,
     "recommended_action": "Immediate maintenance required",
     "model_type": "RandomForestClassifier",
+    "dataset_source": "NASA IMS Bearing Dataset",
     "probabilities": {
-      "CRITICAL": 1.0,
-      "NORMAL": 0.0,
-      "WARNING": 0.0
+      "CRITICAL": 0.46,
+      "NORMAL": 0.21,
+      "WARNING": 0.33
     }
   },
   "anomaly_detection": {
@@ -427,19 +481,44 @@ Open a third terminal:
 venv\Scripts\python.exe consumer/kafka_prediction_consumer.py
 ```
 
-### 5. Train ML Model
+### 5. Prepare Real NASA IMS Dataset
+
+The raw NASA IMS files should be extracted locally inside:
+
+```text
+data/raw/
+```
+
+Then run:
 
 ```bash
-venv\Scripts\python.exe models/train_model.py
+venv\Scripts\python.exe models/prepare_real_ims_data.py
 ```
 
 This generates:
 
-* `data/training_data.csv`
-* `models/trained_model.pkl`
-* `models/model_metadata.json`
+```text
+data/training_data_real.csv
+```
 
-### 6. Evaluate ML Model
+### 6. Train Real ML Model
+
+```bash
+venv\Scripts\python.exe models/train_real_model.py
+```
+
+This generates:
+
+* `models/trained_model_real.pkl`
+* `models/model_metadata_real.json`
+
+### 7. Test Real Model Prediction
+
+```bash
+venv\Scripts\python.exe -m models.test_real_model_prediction
+```
+
+### 8. Evaluate ML Model
 
 ```bash
 venv\Scripts\python.exe models/evaluate_model.py
@@ -447,7 +526,9 @@ venv\Scripts\python.exe models/evaluate_model.py
 
 This generates:
 
-* `models/evaluation_report.json`
+```text
+models/evaluation_report.json
+```
 
 ## Run Tests
 
@@ -458,7 +539,7 @@ venv\Scripts\python.exe -m pytest tests
 Expected result:
 
 ```text
-11 passed
+13 passed
 ```
 
 ## Project Status
@@ -469,11 +550,14 @@ Completed:
 * Kafka producer and consumer
 * PostgreSQL prediction storage
 * Prediction history endpoint
+* Feature extraction module
 * RandomForestClassifier model training
-* ML model integration with FastAPI
+* NASA IMS real dataset preprocessing
+* Real-data RandomForestClassifier training
+* FastAPI connected to real-data trained model
 * Prediction probability output
 * Model lifecycle metadata generation
-* `/model-info` endpoint connected to metadata file
+* `/model-info` endpoint for model lifecycle information
 * Model evaluation report generation
 * `/model-evaluation` endpoint
 * Streaming anomaly detection module
@@ -481,16 +565,12 @@ Completed:
 * Unit tests for ML model
 * Unit tests for API endpoints
 * Unit tests for anomaly detection
-* Feature extraction module
 * Unit tests for feature extraction
 
 Future improvements:
 
-* Train machine learning model using a real predictive maintenance dataset
 * Add MLflow model tracking
 * Add advanced signal processing using SciPy
 * Add dashboard integration for H3 team
 * Add deployment support for production environment
-
-```
-```
+* Train using all IMS test sets instead of only `2nd_test`
