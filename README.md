@@ -22,6 +22,7 @@ The system receives machine sensor readings, extracts vibration and temperature 
 * `/model-evaluation` endpoint to view saved ML evaluation results
 * Streaming anomaly detection for abnormal sensor behavior
 * Unit tests for prediction logic, API endpoints, ML model, feature extraction, and anomaly detection
+* API tests verifying real NASA IMS model integration
 
 ## System Flow
 
@@ -583,6 +584,7 @@ Completed:
 * Unit tests for feature extraction
 * Unit test for real NASA IMS trained model
 * Real NASA IMS model evaluation report
+* API test proving `/predict` uses NASA IMS trained model
 
 Future improvements:
 
