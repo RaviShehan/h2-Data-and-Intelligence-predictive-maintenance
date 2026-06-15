@@ -8,62 +8,69 @@
         "vibration_rms",
         "vibration_mean",
         "vibration_peak",
-        "vibration_std"
+        "vibration_std",
+        "signal_rms",
+        "signal_mean",
+        "signal_peak",
+        "signal_std",
+        "signal_skewness",
+        "signal_kurtosis",
+        "spectral_energy"
     ],
     "risk_classes": [
         "NORMAL",
         "WARNING",
         "CRITICAL"
     ],
-    "accuracy": 0.9289,
+    "accuracy": 0.9645,
     "classification_report": {
         "CRITICAL": {
-            "precision": 0.8181818181818182,
-            "recall": 0.9,
-            "f1-score": 0.8571428571428571,
+            "precision": 0.9354838709677419,
+            "recall": 0.9666666666666667,
+            "f1-score": 0.9508196721311475,
             "support": 30.0
         },
         "NORMAL": {
-            "precision": 0.9747899159663865,
-            "recall": 0.9830508474576272,
-            "f1-score": 0.9789029535864979,
+            "precision": 0.9669421487603306,
+            "recall": 0.9915254237288136,
+            "f1-score": 0.9790794979079498,
             "support": 118.0
         },
         "WARNING": {
-            "precision": 0.8888888888888888,
-            "recall": 0.8163265306122449,
-            "f1-score": 0.851063829787234,
+            "precision": 0.9777777777777777,
+            "recall": 0.8979591836734694,
+            "f1-score": 0.9361702127659575,
             "support": 49.0
         },
-        "accuracy": 0.9289340101522843,
+        "accuracy": 0.9644670050761421,
         "macro avg": {
-            "precision": 0.8939535410123645,
-            "recall": 0.899792459356624,
-            "f1-score": 0.8957032135055297,
+            "precision": 0.96006793250195,
+            "recall": 0.95205042468965,
+            "f1-score": 0.9553564609350182,
             "support": 197.0
         },
         "weighted avg": {
-            "precision": 0.9295747217514909,
-            "recall": 0.9289340101522843,
-            "f1-score": 0.9285632583607459,
+            "precision": 0.9648467045373725,
+            "recall": 0.9644670050761421,
+            "f1-score": 0.9641031032619514,
             "support": 197.0
         }
     },
     "confusion_matrix": [
         [
-            27,
-            0,
-            3
+            29,
+            1,
+            0
         ],
         [
             0,
-            116,
-            2
+            117,
+            1
         ],
         [
-            6,
+            2,
             3,
-            40
+            44
         ]
     ]
 }

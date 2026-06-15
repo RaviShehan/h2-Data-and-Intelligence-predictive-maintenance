@@ -15,7 +15,14 @@ FEATURE_COLUMNS = [
     "vibration_rms",
     "vibration_mean",
     "vibration_peak",
-    "vibration_std"
+    "vibration_std",
+    "signal_rms",
+    "signal_mean",
+    "signal_peak",
+    "signal_std",
+    "signal_skewness",
+    "signal_kurtosis",
+    "spectral_energy"
 ]
 
 
@@ -60,8 +67,8 @@ def evaluate_real_model():
     with open(REPORT_PATH, "w") as file:
         json.dump(evaluation_result, file, indent=4)
 
-    print("Real NASA IMS Model Evaluation Report")
-    print("------------------------------------")
+    print("Real NASA IMS Model Evaluation Report with SciPy Features")
+    print("-------------------------------------------------------")
     print("Accuracy:", round(accuracy, 4))
     print()
     print("Classification Report:")
