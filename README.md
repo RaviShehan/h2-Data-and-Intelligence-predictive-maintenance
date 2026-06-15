@@ -131,6 +131,17 @@ tests/test_feature_extraction.py
 
 These features help the RandomForestClassifier classify the machine health state more accurately.
 
+
+## SciPy Signal Processing
+
+The project includes a SciPy-based signal processing module for extracting statistical and frequency-domain features from vibration signals.
+
+Signal processing logic is implemented in:
+
+```text
+features/signal_processing.py
+
+
 ## Machine Learning Model
 
 The prediction service uses a trained machine learning model to classify machine health risk.
@@ -333,6 +344,7 @@ This supports real-time monitoring of abnormal machine behavior in the predictiv
 * NumPy
 * joblib
 * httpx
+* SciPy
 
 ## API Endpoints
 
@@ -607,7 +619,7 @@ venv\Scripts\python.exe -m pytest tests
 Expected result:
 
 ```text
-19 passed
+21 passed
 ```
 
 ## Project Status
@@ -640,6 +652,8 @@ Completed:
 * Model card for NASA IMS prediction model
 * Dataset documentation for NASA IMS Bearing Dataset
 * Unit tests for real NASA IMS processed dataset
+* SciPy signal processing module
+* Unit tests for signal processing features
 
 
 Future improvements:
