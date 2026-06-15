@@ -30,7 +30,7 @@ def home():
 @app.get("/model-info")
 def get_model_info():
     metadata_path = "models/model_metadata_real.json"
-    
+
     if not os.path.exists(metadata_path):
         raise HTTPException(
             status_code=404,
@@ -47,7 +47,7 @@ def get_model_info():
 
 @app.get("/model-evaluation")
 def get_model_evaluation():
-    report_path = "models/evaluation_report.json"
+    report_path = "models/evaluation_report_real.json"
 
     if not os.path.exists(report_path):
         raise HTTPException(

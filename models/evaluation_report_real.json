@@ -1,0 +1,69 @@
+{
+    "model_type": "RandomForestClassifier",
+    "dataset_source": "NASA IMS Bearing Dataset",
+    "dataset": "data/training_data_real.csv",
+    "model_file": "models/trained_model_real.pkl",
+    "input_features": [
+        "vibration_total",
+        "vibration_rms",
+        "vibration_mean",
+        "vibration_peak",
+        "vibration_std"
+    ],
+    "risk_classes": [
+        "NORMAL",
+        "WARNING",
+        "CRITICAL"
+    ],
+    "accuracy": 0.9289,
+    "classification_report": {
+        "CRITICAL": {
+            "precision": 0.8181818181818182,
+            "recall": 0.9,
+            "f1-score": 0.8571428571428571,
+            "support": 30.0
+        },
+        "NORMAL": {
+            "precision": 0.9747899159663865,
+            "recall": 0.9830508474576272,
+            "f1-score": 0.9789029535864979,
+            "support": 118.0
+        },
+        "WARNING": {
+            "precision": 0.8888888888888888,
+            "recall": 0.8163265306122449,
+            "f1-score": 0.851063829787234,
+            "support": 49.0
+        },
+        "accuracy": 0.9289340101522843,
+        "macro avg": {
+            "precision": 0.8939535410123645,
+            "recall": 0.899792459356624,
+            "f1-score": 0.8957032135055297,
+            "support": 197.0
+        },
+        "weighted avg": {
+            "precision": 0.9295747217514909,
+            "recall": 0.9289340101522843,
+            "f1-score": 0.9285632583607459,
+            "support": 197.0
+        }
+    },
+    "confusion_matrix": [
+        [
+            27,
+            0,
+            3
+        ],
+        [
+            0,
+            116,
+            2
+        ],
+        [
+            6,
+            3,
+            40
+        ]
+    ]
+}
