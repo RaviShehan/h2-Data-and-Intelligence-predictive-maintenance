@@ -14,7 +14,7 @@ The dataset is used to train a machine learning model that predicts machine heal
 * WARNING
 * CRITICAL
 
-The model uses vibration-based features extracted from raw bearing vibration signals.
+The model uses vibration-based and SciPy-based signal-processing features extracted from raw bearing vibration signals.
 
 ## Raw Dataset Location
 
@@ -44,7 +44,7 @@ The raw vibration files are processed into a CSV file:
 data/training_data_real.csv
 ```
 
-This processed file contains extracted vibration features and machine health labels.
+This processed file contains extracted vibration features, SciPy signal-processing features, and machine health labels.
 
 ## Preprocessing Script
 
@@ -58,6 +58,7 @@ This script performs the following steps:
 
 * Reads raw vibration signal files
 * Extracts vibration features
+* Extracts SciPy-based signal-processing features
 * Assigns machine health labels based on degradation progress
 * Saves the processed dataset as `training_data_real.csv`
 
@@ -70,6 +71,17 @@ The following features are extracted from vibration signals:
 * vibration_mean
 * vibration_peak
 * vibration_std
+* signal_rms
+* signal_mean
+* signal_peak
+* signal_std
+* signal_skewness
+* signal_kurtosis
+* spectral_energy
+
+The `signal_skewness` and `signal_kurtosis` features are extracted using SciPy.
+
+The `spectral_energy` feature is extracted using FFT-based frequency-domain analysis.
 
 ## Labeling Method
 
@@ -113,6 +125,12 @@ The evaluation report is saved as:
 
 ```text
 models/evaluation_report_real.json
+```
+
+Current model accuracy after adding SciPy signal-processing features:
+
+```text
+0.9645
 ```
 
 ## Current Limitation
