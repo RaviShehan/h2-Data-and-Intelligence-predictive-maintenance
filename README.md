@@ -31,7 +31,7 @@ This project includes separate documentation files to make the system easier to 
 | `CI_CD.md` | Explains the GitHub Actions automated testing workflow |
 | `CHANGELOG.md` | Tracks important project changes, milestones, model improvements, and test status |
 | `PROJECT_SUMMARY.md` | One-page summary of the full H2 component for viva and report |
-
+| `DATABASE_SCHEMA.md` | Explains the PostgreSQL prediction table and stored fields |
 
 
 
@@ -75,6 +75,11 @@ This project includes separate documentation files to make the system easier to 
 * CI/CD documentation for GitHub Actions automated testing
 * Changelog for tracking project progress and milestones
 * One-page project summary documentation
+* Database schema documentation
+
+
+
+
 
 ## System Flow
 
@@ -861,7 +866,7 @@ Completed:
 * CI/CD documentation
 * Changelog documentation
 * Project summary documentation
-
+* Database schema documentation
 
 
 Future improvements:
