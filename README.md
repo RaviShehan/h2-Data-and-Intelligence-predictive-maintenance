@@ -19,7 +19,7 @@ This project includes separate documentation files to make the system easier to 
 | `SETUP.md` | Step-by-step local setup guide for running the project |
 | `PROJECT_STRUCTURE.md` | Explains the folder and file structure of the H2 component |
 | `TROUBLESHOOTING.md` | Lists common setup, API, Kafka, database, model, and Git errors with fixes |
-
+| `API_REFERENCE.md` | Documents all FastAPI endpoints, request bodies, responses, and validation rules |
 
 
 
@@ -53,6 +53,9 @@ This project includes separate documentation files to make the system easier to 
 * Setup guide for local installation and execution
 * Project structure documentation
 * Troubleshooting guide for common project errors
+* API reference documentation
+
+
 
 
 
@@ -831,6 +834,9 @@ Completed:
 * Setup documentation
 * Project structure documentation
 * Troubleshooting documentation
+* API reference documentation
+
+
 
 
 
