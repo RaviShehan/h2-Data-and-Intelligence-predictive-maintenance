@@ -25,6 +25,10 @@ This project includes separate documentation files to make the system easier to 
 | `TESTING.md` | Explains automated tests and what the 26 passed tests verify |
 | `REQUIREMENTS.md` | Lists functional and non-functional requirements of the H2 component |
 | `LIMITATIONS_AND_FUTURE_WORK.md` | Explains current limitations and future improvements |
+| `CI_CD.md` | Explains the GitHub Actions automated testing workflow |
+
+
+
 
 
 
@@ -65,6 +69,8 @@ This project includes separate documentation files to make the system easier to 
 * Requirements documentation for H2 functionality
 * Limitations and future work documentation
 * GitHub Actions workflow for automated test execution
+* CI/CD documentation for GitHub Actions automated testing
+
 
 
 ## System Flow
@@ -849,6 +855,8 @@ Completed:
 * Requirements documentation
 * Limitations and future work documentation
 * GitHub Actions CI testing workflow
+* CI/CD documentation
+
 
 
 Future improvements:
