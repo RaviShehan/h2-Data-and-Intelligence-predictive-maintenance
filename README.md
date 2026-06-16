@@ -64,7 +64,7 @@ This project includes separate documentation files to make the system easier to 
 * Testing documentation for automated pytest suite
 * Requirements documentation for H2 functionality
 * Limitations and future work documentation
-
+* GitHub Actions workflow for automated test execution
 
 
 ## System Flow
@@ -848,7 +848,7 @@ Completed:
 * Testing documentation
 * Requirements documentation
 * Limitations and future work documentation
-
+* GitHub Actions CI testing workflow
 
 
 Future improvements:
