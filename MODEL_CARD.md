@@ -69,6 +69,43 @@ The model evaluation report is saved in:
 models/evaluation_report_real.json
 ```
 
+## Feature Importance
+
+The project generates a feature importance report for the real NASA IMS RandomForestClassifier model.
+
+Feature importance file:
+
+```text
+models/feature_importance_real.json
+```
+
+Feature importance generation script:
+
+```text
+models/feature_importance_real.py
+```
+
+This report shows which vibration and SciPy signal-processing features contribute most to the machine health risk prediction.
+
+The model uses the following input features:
+
+* vibration_total
+* vibration_rms
+* vibration_mean
+* vibration_peak
+* vibration_std
+* signal_rms
+* signal_mean
+* signal_peak
+* signal_std
+* signal_skewness
+* signal_kurtosis
+* spectral_energy
+
+Feature importance helps explain the model during project report writing and viva discussion.
+
+
+
 ## Model Files
 
 * `models/prepare_real_ims_data.py`
