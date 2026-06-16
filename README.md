@@ -33,6 +33,7 @@ This project includes separate documentation files to make the system easier to 
 | `PROJECT_SUMMARY.md` | One-page summary of the full H2 component for viva and report |
 | `DATABASE_SCHEMA.md` | Explains the PostgreSQL prediction table and stored fields |
 | `MODEL_TRAINING_PIPELINE.md` | Explains data preprocessing, feature extraction, model training, evaluation, and feature importance generation |
+| `DATA_DICTIONARY.md` | Explains raw input fields, extracted features, model outputs, anomaly fields, and database fields |
 
 
 ## Current Features
@@ -77,7 +78,7 @@ This project includes separate documentation files to make the system easier to 
 * One-page project summary documentation
 * Database schema documentation
 * Model training pipeline documentation
-
+* Data dictionary documentation
 
 
 
@@ -868,6 +869,11 @@ Completed:
 * Project summary documentation
 * Database schema documentation
 * Model training pipeline documentation
+* Data dictionary documentation
+
+
+
+
 
 Future improvements:
 
