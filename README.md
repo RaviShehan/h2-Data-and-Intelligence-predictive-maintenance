@@ -21,6 +21,8 @@ The system receives machine sensor readings, extracts vibration and temperature 
 * Model lifecycle metadata
 * `/model-info` endpoint for ML model lifecycle information
 * `/model-evaluation` endpoint to view saved ML evaluation results
+* Feature importance report for real NASA IMS model
+* `/feature-importance` endpoint to view model feature importance
 * Streaming anomaly detection for abnormal sensor behavior
 * API tests verifying real NASA IMS model integration
 * Tests verifying real NASA IMS processed dataset structure
@@ -326,6 +328,30 @@ This verifies how well the model predicts the three machine health classes:
 * WARNING
 * CRITICAL
 
+## Feature Importance
+
+The project generates a feature importance report for the real NASA IMS RandomForestClassifier model.
+
+Feature importance script:
+
+```text
+models/feature_importance_real.py
+```
+
+Run feature importance generation:
+
+```bash
+venv\Scripts\python.exe models/feature_importance_real.py
+```
+
+The feature importance report is saved to:
+
+```text
+models/feature_importance_real.json
+```
+
+This helps explain which vibration and SciPy signal-processing features contribute most to the machine health prediction.
+
 ## Streaming Anomaly Detection
 
 The system includes anomaly detection logic to identify abnormal machine sensor behavior during prediction.
@@ -460,6 +486,35 @@ Example response:
   "accuracy": 0.9645,
   "classification_report": {},
   "confusion_matrix": []
+}
+```
+
+### Feature Importance
+
+```http
+GET /feature-importance
+```
+
+This endpoint returns the feature importance report for the real NASA IMS RandomForestClassifier model.
+
+The response includes:
+
+* Model type
+* Dataset source
+* Feature importance values
+
+Example response:
+
+```json
+{
+  "model_type": "RandomForestClassifier",
+  "dataset_source": "NASA IMS Bearing Dataset",
+  "feature_importance": [
+    {
+      "feature": "spectral_energy",
+      "importance": 0.25
+    }
+  ]
 }
 ```
 
@@ -648,6 +703,18 @@ This generates:
 models/evaluation_report_real.json
 ```
 
+### 9. Generate Feature Importance Report
+
+```bash
+venv\Scripts\python.exe models/feature_importance_real.py
+```
+
+This generates:
+
+```text
+models/feature_importance_real.json
+```
+
 ## Run Tests
 
 ```bash
@@ -657,7 +724,7 @@ venv\Scripts\python.exe -m pytest tests
 Expected result:
 
 ```text
-21 passed
+22 passed
 ```
 
 ## Project Status
@@ -680,6 +747,9 @@ Completed:
 * `/model-info` endpoint for model lifecycle information
 * Real model evaluation report generation
 * `/model-evaluation` endpoint
+* Feature importance report generation
+* `/feature-importance` endpoint
+* API test for feature importance endpoint
 * Streaming anomaly detection module
 * Model card for NASA IMS prediction model
 * Dataset documentation for NASA IMS Bearing Dataset
