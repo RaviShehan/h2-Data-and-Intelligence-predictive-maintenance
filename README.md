@@ -27,6 +27,9 @@ The system receives machine sensor readings, extracts vibration and temperature 
 * API tests verifying real NASA IMS model integration
 * Tests verifying real NASA IMS processed dataset structure
 * Unit tests for prediction logic, API endpoints, ML model, feature extraction, signal processing, and anomaly detection
+* Tests verifying real NASA IMS feature importance report
+
+
 
 ## System Flow
 
@@ -724,7 +727,7 @@ venv\Scripts\python.exe -m pytest tests
 Expected result:
 
 ```text
-22 passed
+26 passed
 ```
 
 ## Project Status
@@ -762,6 +765,9 @@ Completed:
 * Unit tests for real NASA IMS processed dataset
 * Unit test for real NASA IMS trained model
 * API test proving `/predict` uses NASA IMS trained model
+* Unit tests for feature importance report
+
+
 
 Future improvements:
 
