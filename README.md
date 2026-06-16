@@ -32,7 +32,7 @@ This project includes separate documentation files to make the system easier to 
 | `CHANGELOG.md` | Tracks important project changes, milestones, model improvements, and test status |
 | `PROJECT_SUMMARY.md` | One-page summary of the full H2 component for viva and report |
 | `DATABASE_SCHEMA.md` | Explains the PostgreSQL prediction table and stored fields |
-
+| `MODEL_TRAINING_PIPELINE.md` | Explains data preprocessing, feature extraction, model training, evaluation, and feature importance generation |
 
 
 ## Current Features
@@ -76,7 +76,7 @@ This project includes separate documentation files to make the system easier to 
 * Changelog for tracking project progress and milestones
 * One-page project summary documentation
 * Database schema documentation
-
+* Model training pipeline documentation
 
 
 
@@ -867,7 +867,7 @@ Completed:
 * Changelog documentation
 * Project summary documentation
 * Database schema documentation
-
+* Model training pipeline documentation
 
 Future improvements:
 
