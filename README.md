@@ -18,6 +18,10 @@ This project includes separate documentation files to make the system easier to 
 | `DEMO_GUIDE.md`   | Step-by-step guide to demonstrate the project during viva             |
 | `SETUP.md` | Step-by-step local setup guide for running the project |
 | `PROJECT_STRUCTURE.md` | Explains the folder and file structure of the H2 component |
+| `TROUBLESHOOTING.md` | Lists common setup, API, Kafka, database, model, and Git errors with fixes |
+
+
+
 
 ## Current Features
 
@@ -48,6 +52,8 @@ This project includes separate documentation files to make the system easier to 
 * Demo guide for project presentation
 * Setup guide for local installation and execution
 * Project structure documentation
+* Troubleshooting guide for common project errors
+
 
 
 ## System Flow
@@ -824,6 +830,8 @@ Completed:
 * Demo guide for H2 component
 * Setup documentation
 * Project structure documentation
+* Troubleshooting documentation
+
 
 
 Future improvements:
