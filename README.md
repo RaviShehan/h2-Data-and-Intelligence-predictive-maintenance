@@ -35,7 +35,7 @@ This project includes separate documentation files to make the system easier to 
 | `MODEL_TRAINING_PIPELINE.md` | Explains data preprocessing, feature extraction, model training, evaluation, and feature importance generation |
 | `DATA_DICTIONARY.md` | Explains raw input fields, extracted features, model outputs, anomaly fields, and database fields |
 | `SAMPLE_REQUESTS.md` | Provides sample API requests for testing FastAPI endpoints |
-
+| `RUN_COMMANDS.md` | Lists common commands for testing, running FastAPI, Kafka, model training, Git, and shutdown |
 
 
 ## Current Features
@@ -82,6 +82,9 @@ This project includes separate documentation files to make the system easier to 
 * Model training pipeline documentation
 * Data dictionary documentation
 * Sample API request documentation
+* Quick run commands documentation
+
+
 
 
 ## System Flow
@@ -873,7 +876,7 @@ Completed:
 * Model training pipeline documentation
 * Data dictionary documentation
 * Sample API request documentation
-
+* Run commands documentation
 
 
 
