@@ -21,7 +21,7 @@ This project includes separate documentation files to make the system easier to 
 | `TROUBLESHOOTING.md` | Lists common setup, API, Kafka, database, model, and Git errors with fixes |
 | `API_REFERENCE.md` | Documents all FastAPI endpoints, request bodies, responses, and validation rules |
 | `SECURITY.md` | Explains environment variable safety, Git safety, raw dataset safety, and future security improvements |
-
+| `FINAL_CHECKLIST.md` | Final pre-viva checklist for tests, API, files, demo, and Git safety |
 
 
 
@@ -60,7 +60,7 @@ This project includes separate documentation files to make the system easier to 
 * Troubleshooting guide for common project errors
 * API reference documentation
 * Security documentation for environment variables and Git safety
-
+* Final viva checklist
 
 
 
@@ -841,7 +841,7 @@ Completed:
 * Troubleshooting documentation
 * API reference documentation
 * Security documentation
-
+* Final viva checklist documentation
 
 
 
