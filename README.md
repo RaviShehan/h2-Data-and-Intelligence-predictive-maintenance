@@ -24,7 +24,7 @@ This project includes separate documentation files to make the system easier to 
 | `FINAL_CHECKLIST.md` | Final pre-viva checklist for tests, API, files, demo, and Git safety |
 | `TESTING.md` | Explains automated tests and what the 26 passed tests verify |
 | `REQUIREMENTS.md` | Lists functional and non-functional requirements of the H2 component |
-
+| `LIMITATIONS_AND_FUTURE_WORK.md` | Explains current limitations and future improvements |
 
 
 
@@ -63,7 +63,7 @@ This project includes separate documentation files to make the system easier to 
 * Final viva checklist
 * Testing documentation for automated pytest suite
 * Requirements documentation for H2 functionality
-
+* Limitations and future work documentation
 
 
 
@@ -847,7 +847,7 @@ Completed:
 * Final viva checklist documentation
 * Testing documentation
 * Requirements documentation
-
+* Limitations and future work documentation
 
 
 
