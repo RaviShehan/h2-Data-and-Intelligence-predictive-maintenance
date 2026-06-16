@@ -652,6 +652,8 @@ This endpoint returns recently stored prediction records from PostgreSQL.
 
 ## Environment Variables
 
+A safe example environment file is provided as `.env.example`. Copy it to `.env` and replace `DB_PASSWORD` with your local PostgreSQL password.
+
 Create a `.env` file in the project root.
 
 ```env
