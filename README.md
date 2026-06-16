@@ -23,7 +23,7 @@ This project includes separate documentation files to make the system easier to 
 | `SECURITY.md` | Explains environment variable safety, Git safety, raw dataset safety, and future security improvements |
 | `FINAL_CHECKLIST.md` | Final pre-viva checklist for tests, API, files, demo, and Git safety |
 | `TESTING.md` | Explains automated tests and what the 26 passed tests verify |
-
+| `REQUIREMENTS.md` | Lists functional and non-functional requirements of the H2 component |
 
 
 
@@ -62,6 +62,9 @@ This project includes separate documentation files to make the system easier to 
 * Security documentation for environment variables and Git safety
 * Final viva checklist
 * Testing documentation for automated pytest suite
+* Requirements documentation for H2 functionality
+
+
 
 
 ## System Flow
@@ -843,6 +846,9 @@ Completed:
 * Security documentation
 * Final viva checklist documentation
 * Testing documentation
+* Requirements documentation
+
+
 
 
 Future improvements:
