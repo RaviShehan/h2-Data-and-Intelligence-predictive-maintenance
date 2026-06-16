@@ -267,6 +267,38 @@ The model card explains:
 
 This helps make the machine learning part more transparent and report-ready.
 
+## Architecture Documentation
+
+An architecture document is included to explain the H2 system flow and component responsibilities.
+
+Architecture documentation file:
+
+```text
+ARCHITECTURE.md
+```
+
+This document explains the full data flow from sensor simulation to Kafka streaming, FastAPI prediction, feature extraction, SciPy signal processing, machine learning prediction, anomaly detection, and PostgreSQL storage.
+
+The architecture documentation covers:
+
+* Purpose of the H2 Data and Intelligence component
+* High-level system flow
+* Sensor simulator
+* Kafka producer and consumer
+* FastAPI prediction API
+* Feature extraction
+* SciPy signal processing
+* RandomForestClassifier prediction model
+* Anomaly detection
+* PostgreSQL prediction storage
+* H2 responsibility in the full Group H project
+
+This helps make the project easier to explain during report writing and viva discussion.
+
+
+
+
+
 ## Model Lifecycle Metadata
 
 The system stores model lifecycle information in metadata files after model training.
