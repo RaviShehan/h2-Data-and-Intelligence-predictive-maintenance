@@ -4,6 +4,21 @@ This project is the Data and Intelligence component of the Group H Predictive Ma
 
 The system receives machine sensor readings, extracts vibration and temperature features, predicts machine health risk, performs anomaly detection, and stores prediction history in PostgreSQL.
 
+## Project Documentation
+
+This project includes separate documentation files to make the system easier to understand, explain, and demonstrate.
+
+| File              | Purpose                                                               |
+| ----------------- | --------------------------------------------------------------------- |
+| `README.md`       | Main project overview, setup guide, API endpoints, and project status |
+| `DATASET.md`      | Explains the NASA IMS Bearing Dataset usage and preprocessing         |
+| `MODEL_CARD.md`   | Documents the real NASA IMS RandomForestClassifier model              |
+| `ARCHITECTURE.md` | Explains the H2 system architecture and component responsibilities    |
+| `VIVA_NOTES.md`   | Contains short viva answers for explaining the H2 component           |
+| `DEMO_GUIDE.md`   | Step-by-step guide to demonstrate the project during viva             |
+
+
+
 ## Current Features
 
 * FastAPI prediction API
@@ -28,7 +43,9 @@ The system receives machine sensor readings, extracts vibration and temperature 
 * Tests verifying real NASA IMS processed dataset structure
 * Unit tests for prediction logic, API endpoints, ML model, feature extraction, signal processing, and anomaly detection
 * Tests verifying real NASA IMS feature importance report
-
+* Architecture documentation for H2 system flow
+* Viva notes for explaining the H2 component
+* Demo guide for project presentation
 
 
 ## System Flow
@@ -798,6 +815,10 @@ Completed:
 * Unit test for real NASA IMS trained model
 * API test proving `/predict` uses NASA IMS trained model
 * Unit tests for feature importance report
+* Architecture documentation
+* Viva notes for H2 component
+* Demo guide for H2 component
+
 
 
 
