@@ -17,7 +17,7 @@ This project includes separate documentation files to make the system easier to 
 | `VIVA_NOTES.md`   | Contains short viva answers for explaining the H2 component           |
 | `DEMO_GUIDE.md`   | Step-by-step guide to demonstrate the project during viva             |
 | `SETUP.md` | Step-by-step local setup guide for running the project |
-
+| `PROJECT_STRUCTURE.md` | Explains the folder and file structure of the H2 component |
 
 ## Current Features
 
@@ -47,7 +47,7 @@ This project includes separate documentation files to make the system easier to 
 * Viva notes for explaining the H2 component
 * Demo guide for project presentation
 * Setup guide for local installation and execution
-
+* Project structure documentation
 
 
 ## System Flow
@@ -823,7 +823,7 @@ Completed:
 * Viva notes for H2 component
 * Demo guide for H2 component
 * Setup documentation
-
+* Project structure documentation
 
 
 Future improvements:
