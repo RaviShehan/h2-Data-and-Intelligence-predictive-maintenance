@@ -20,6 +20,11 @@ This project includes separate documentation files to make the system easier to 
 | `PROJECT_STRUCTURE.md` | Explains the folder and file structure of the H2 component |
 | `TROUBLESHOOTING.md` | Lists common setup, API, Kafka, database, model, and Git errors with fixes |
 | `API_REFERENCE.md` | Documents all FastAPI endpoints, request bodies, responses, and validation rules |
+| `SECURITY.md` | Explains environment variable safety, Git safety, raw dataset safety, and future security improvements |
+
+
+
+
 
 
 
@@ -54,7 +59,7 @@ This project includes separate documentation files to make the system easier to 
 * Project structure documentation
 * Troubleshooting guide for common project errors
 * API reference documentation
-
+* Security documentation for environment variables and Git safety
 
 
 
@@ -835,7 +840,7 @@ Completed:
 * Project structure documentation
 * Troubleshooting documentation
 * API reference documentation
-
+* Security documentation
 
 
 
