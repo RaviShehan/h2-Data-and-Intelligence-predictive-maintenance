@@ -58,6 +58,19 @@ def get_model_evaluation():
     with open(report_path, "r") as file:
         return json.load(file)
 
+@app.get("/feature-importance")
+def get_feature_importance():
+    importance_path = "models/feature_importance_real.json"
+
+    if not os.path.exists(importance_path):
+        raise HTTPException(
+            status_code=404,
+            detail="Feature importance report not found. Run models/feature_importance_real.py first."
+        )
+
+    with open(importance_path, "r") as file:
+        return json.load(file)
+
 
 @app.post("/predict")
 def predict(data: SensorData):

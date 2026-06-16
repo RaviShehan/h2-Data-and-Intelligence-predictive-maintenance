@@ -96,3 +96,16 @@ def test_predict_endpoint_uses_real_nasa_model():
     assert data["prediction"]["dataset_source"] == "NASA IMS Bearing Dataset"
     assert data["prediction"]["risk_level"] in ["NORMAL", "WARNING", "CRITICAL"]
     assert "probabilities" in data["prediction"]
+
+
+def test_feature_importance_endpoint():
+    response = client.get("/feature-importance")
+
+    assert response.status_code == 200
+
+    data = response.json()
+
+    assert data["model_type"] == "RandomForestClassifier"
+    assert data["dataset_source"] == "NASA IMS Bearing Dataset"
+    assert "feature_importance" in data
+    assert len(data["feature_importance"]) > 0
