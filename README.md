@@ -1,5 +1,8 @@
 # H2 Data Intelligence - Predictive Maintenance System
 
+[![H2 Data Intelligence Tests](https://github.com/RaviShehan/h2-Data-and-Intelligence-predictive-maintenance/actions/workflows/tests.yml/badge.svg)](https://github.com/RaviShehan/h2-Data-and-Intelligence-predictive-maintenance/actions/workflows/tests.yml)
+
+
 This project is the Data and Intelligence component of the Group H Predictive Maintenance System.
 
 The system receives machine sensor readings, extracts vibration and temperature features, predicts machine health risk, performs anomaly detection, and stores prediction history in PostgreSQL.
