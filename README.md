@@ -30,7 +30,7 @@ This project includes separate documentation files to make the system easier to 
 | `LIMITATIONS_AND_FUTURE_WORK.md` | Explains current limitations and future improvements |
 | `CI_CD.md` | Explains the GitHub Actions automated testing workflow |
 | `CHANGELOG.md` | Tracks important project changes, milestones, model improvements, and test status |
-
+| `PROJECT_SUMMARY.md` | One-page summary of the full H2 component for viva and report |
 
 
 
@@ -74,7 +74,7 @@ This project includes separate documentation files to make the system easier to 
 * GitHub Actions workflow for automated test execution
 * CI/CD documentation for GitHub Actions automated testing
 * Changelog for tracking project progress and milestones
-
+* One-page project summary documentation
 
 ## System Flow
 
@@ -860,6 +860,8 @@ Completed:
 * GitHub Actions CI testing workflow
 * CI/CD documentation
 * Changelog documentation
+* Project summary documentation
+
 
 
 Future improvements:
