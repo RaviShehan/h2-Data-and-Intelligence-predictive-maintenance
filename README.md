@@ -34,6 +34,8 @@ This project includes separate documentation files to make the system easier to 
 | `DATABASE_SCHEMA.md` | Explains the PostgreSQL prediction table and stored fields |
 | `MODEL_TRAINING_PIPELINE.md` | Explains data preprocessing, feature extraction, model training, evaluation, and feature importance generation |
 | `DATA_DICTIONARY.md` | Explains raw input fields, extracted features, model outputs, anomaly fields, and database fields |
+| `SAMPLE_REQUESTS.md` | Provides sample API requests for testing FastAPI endpoints |
+
 
 
 ## Current Features
@@ -79,7 +81,7 @@ This project includes separate documentation files to make the system easier to 
 * Database schema documentation
 * Model training pipeline documentation
 * Data dictionary documentation
-
+* Sample API request documentation
 
 
 ## System Flow
@@ -870,7 +872,7 @@ Completed:
 * Database schema documentation
 * Model training pipeline documentation
 * Data dictionary documentation
-
+* Sample API request documentation
 
 
 
