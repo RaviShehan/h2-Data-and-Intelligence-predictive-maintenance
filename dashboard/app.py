@@ -1,4 +1,4 @@
-import json
+from dashboard.dashboard_utils import normalize_predictions
 
 import pandas as pd
 import requests
@@ -24,34 +24,13 @@ def fetch_data(endpoint: str, default):
         return default
 
 
-def normalize_predictions(prediction_response):
-    if isinstance(prediction_response, dict):
-        prediction_items = prediction_response.get("predictions", [])
-    elif isinstance(prediction_response, list):
-        prediction_items = prediction_response
-    else:
-        prediction_items = []
-
-    cleaned_predictions = []
-
-    for item in prediction_items:
-        if isinstance(item, dict):
-            cleaned_predictions.append(item)
-        elif isinstance(item, str):
-            try:
-                cleaned_predictions.append(json.loads(item))
-            except json.JSONDecodeError:
-                pass
-
-    return cleaned_predictions
-
-
 st.title("H3 Predictive Maintenance Dashboard")
 
 st.write(
     "This dashboard visualizes machine prediction history, risk levels, "
-    "model information, model evaluation, and feature importance from the H2 API."
+    "model information, model evaluation, feature importance, and system health from the H2 API."
 )
+
 
 if st.button("Refresh Dashboard"):
     st.rerun()
@@ -60,10 +39,12 @@ if st.button("Refresh Dashboard"):
 health_data = fetch_data("/", {})
 prediction_response = fetch_data("/predictions", {"predictions": []})
 predictions = normalize_predictions(prediction_response)
+
 model_info = fetch_data("/model-info", {})
 model_evaluation = fetch_data("/model-evaluation", {})
 feature_importance = fetch_data("/feature-importance", {})
 system_health = fetch_data("/system-health", {})
+
 
 st.sidebar.title("System Status")
 
@@ -82,7 +63,7 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(
         "Risk Summary",
         "Model Information",
         "Feature Importance",
-        "System Health"
+        "System Health",
     ]
 )
 
@@ -107,11 +88,12 @@ with tab1:
             "failure_probability",
             "recommended_action",
             "is_anomaly",
-            "created_at"
+            "created_at",
         ]
 
         available_columns = [
-            column for column in display_columns
+            column
+            for column in display_columns
             if column in df.columns
         ]
 
@@ -166,7 +148,7 @@ with tab3:
     if model_info:
         accuracy_value = model_info.get(
             "accuracy",
-            model_info.get("accuracy_score", "N/A")
+            model_info.get("accuracy_score", "N/A"),
         )
 
         col1, col2, col3 = st.columns(3)
@@ -236,13 +218,13 @@ with tab5:
             "Check": [
                 "Model File Available",
                 "Evaluation Report Available",
-                "Feature Importance Available"
+                "Feature Importance Available",
             ],
             "Status": [
                 system_health.get("model_file_available", False),
                 system_health.get("evaluation_report_available", False),
-                system_health.get("feature_importance_available", False)
-            ]
+                system_health.get("feature_importance_available", False),
+            ],
         }
 
         check_df = pd.DataFrame(check_data)
