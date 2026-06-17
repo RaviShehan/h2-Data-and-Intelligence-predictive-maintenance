@@ -63,7 +63,7 @@ predictions = normalize_predictions(prediction_response)
 model_info = fetch_data("/model-info", {})
 model_evaluation = fetch_data("/model-evaluation", {})
 feature_importance = fetch_data("/feature-importance", {})
-
+system_health = fetch_data("/system-health", {})
 
 st.sidebar.title("System Status")
 
@@ -76,12 +76,13 @@ st.sidebar.write("API Base URL:")
 st.sidebar.code(API_BASE_URL)
 
 
-tab1, tab2, tab3, tab4 = st.tabs(
+tab1, tab2, tab3, tab4, tab5 = st.tabs(
     [
         "Prediction History",
         "Risk Summary",
         "Model Information",
-        "Feature Importance"
+        "Feature Importance",
+        "System Health"
     ]
 )
 
@@ -217,3 +218,37 @@ with tab4:
             st.write(list(importance_df.columns))
     else:
         st.warning("Feature importance report not available.")
+
+
+with tab5:
+    st.header("H4 System Health Monitoring")
+
+    if system_health:
+        col1, col2, col3 = st.columns(3)
+
+        col1.metric("Overall Status", system_health.get("overall_status", "N/A"))
+        col2.metric("API Status", system_health.get("api_status", "N/A"))
+        col3.metric("Database Status", system_health.get("database_status", "N/A"))
+
+        st.subheader("Platform Checks")
+
+        check_data = {
+            "Check": [
+                "Model File Available",
+                "Evaluation Report Available",
+                "Feature Importance Available"
+            ],
+            "Status": [
+                system_health.get("model_file_available", False),
+                system_health.get("evaluation_report_available", False),
+                system_health.get("feature_importance_available", False)
+            ]
+        }
+
+        check_df = pd.DataFrame(check_data)
+        st.dataframe(check_df, use_container_width=True)
+
+        st.subheader("Full System Health Response")
+        st.json(system_health)
+    else:
+        st.warning("System health information is not available.")
