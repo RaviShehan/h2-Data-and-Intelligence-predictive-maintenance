@@ -109,3 +109,18 @@ def test_feature_importance_endpoint():
     assert data["dataset_source"] == "NASA IMS Bearing Dataset"
     assert "feature_importance" in data
     assert len(data["feature_importance"]) > 0
+
+def test_system_health_endpoint():
+    response = client.get("/system-health")
+
+    assert response.status_code == 200
+
+    data = response.json()
+
+    assert data["system"] == "H4 Platform Monitoring"
+    assert "overall_status" in data
+    assert data["api_status"] == "running"
+    assert "database_status" in data
+    assert "model_file_available" in data
+    assert "evaluation_report_available" in data
+    assert "feature_importance_available" in data
