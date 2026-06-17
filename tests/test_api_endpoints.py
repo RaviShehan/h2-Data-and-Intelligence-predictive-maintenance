@@ -1,9 +1,9 @@
 from fastapi.testclient import TestClient
 from api.main import app
-
+from database.db import init_db
 
 client = TestClient(app)
-
+init_db()
 
 def test_health_check_endpoint():
     response = client.get("/")
