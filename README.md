@@ -25,7 +25,7 @@ This project includes separate documentation files to make the system easier to 
 | `API_REFERENCE.md` | Documents all FastAPI endpoints, request bodies, responses, and validation rules |
 | `SECURITY.md` | Explains environment variable safety, Git safety, raw dataset safety, and future security improvements |
 | `FINAL_CHECKLIST.md` | Final pre-viva checklist for tests, API, files, demo, and Git safety |
-| `TESTING.md` | Explains automated tests and what the 26 passed tests verify |
+| `TESTING.md` | Explains automated tests and what the 35 passed tests verify |
 | `REQUIREMENTS.md` | Lists functional and non-functional requirements of the H2 component |
 | `LIMITATIONS_AND_FUTURE_WORK.md` | Explains current limitations and future improvements |
 | `CI_CD.md` | Explains the GitHub Actions automated testing workflow |
@@ -89,7 +89,7 @@ This project includes separate documentation files to make the system easier to 
 * H3 Streamlit dashboard for prediction history, risk summary, model information, and feature importance
 * Full H1-H4 system overview documentation
 * Automated tests for H1 edge simulator filtering and telemetry validation
-
+* Automated tests for H3 dashboard prediction data normalization
 
 
 ## System Flow
@@ -822,7 +822,7 @@ venv\Scripts\python.exe -m pytest tests
 Expected result:
 
 ```text
-31 passed
+35 passed
 ```
 
 ## Project Status
@@ -886,7 +886,7 @@ Completed:
 * Dashboard documentation
 * Full H1-H4 system overview documentation
 * Unit tests for H1 edge simulator
-
+* Unit tests for H3 dashboard utility logic
 
 
 
