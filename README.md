@@ -88,6 +88,8 @@ This project includes separate documentation files to make the system easier to 
 * Quick run commands documentation
 * H3 Streamlit dashboard for prediction history, risk summary, model information, and feature importance
 * Full H1-H4 system overview documentation
+* Automated tests for H1 edge simulator filtering and telemetry validation
+
 
 
 ## System Flow
@@ -820,7 +822,7 @@ venv\Scripts\python.exe -m pytest tests
 Expected result:
 
 ```text
-27 passed
+31 passed
 ```
 
 ## Project Status
@@ -883,6 +885,10 @@ Completed:
 * H3 Streamlit dashboard
 * Dashboard documentation
 * Full H1-H4 system overview documentation
+* Unit tests for H1 edge simulator
+
+
+
 
 Future improvements:
 

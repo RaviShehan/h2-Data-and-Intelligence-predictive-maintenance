@@ -1,6 +1,6 @@
-# H2 Data Intelligence Testing Guide
+# H1-H4 Predictive Maintenance System Testing Guide
 
-This document explains the automated tests used in the H2 Data and Intelligence component.
+This document explains the automated tests used in the Group H Predictive Maintenance System.
 
 ## Purpose of Testing
 
@@ -8,6 +8,7 @@ Testing is used to verify that the system works correctly after changes.
 
 The tests check:
 
+* H1 edge simulator
 * API endpoints
 * input validation
 * feature extraction
@@ -16,6 +17,7 @@ The tests check:
 * real NASA IMS model prediction
 * real NASA IMS processed dataset
 * feature importance report
+* H4 system health monitoring endpoint
 
 ## Run All Tests
 
@@ -28,7 +30,7 @@ venv\Scripts\python.exe -m pytest tests
 Expected result:
 
 ```text
-26 passed
+31 passed
 ```
 
 ## Test Folder
@@ -41,7 +43,27 @@ tests/
 
 ## Main Test Areas
 
-### 1. API Endpoint Tests
+### 1. H1 Edge Simulator Tests
+
+These tests verify the H1 edge simulator.
+
+They check:
+
+* raw sensor data generation
+* required telemetry fields
+* edge-side filtering and rounding
+* valid telemetry acceptance
+* invalid telemetry rejection
+
+Important file:
+
+```text
+tests/test_edge_simulator.py
+```
+
+These tests prove that the H1 edge component can generate, filter, and validate machine telemetry before sending it to Kafka.
+
+### 2. API Endpoint Tests
 
 These tests verify that FastAPI endpoints work correctly.
 
@@ -52,6 +74,7 @@ They test endpoints such as:
 * `GET /model-info`
 * `GET /model-evaluation`
 * `GET /feature-importance`
+* `GET /system-health`
 
 Important file:
 
@@ -59,7 +82,9 @@ Important file:
 tests/test_api_endpoints.py
 ```
 
-### 2. Feature Extraction Tests
+These tests prove that the H2 and H4 API endpoints are working correctly.
+
+### 3. Feature Extraction Tests
 
 These tests verify that raw sensor readings are converted into useful features.
 
@@ -78,7 +103,7 @@ Important file:
 tests/test_feature_extraction.py
 ```
 
-### 3. SciPy Signal Processing Tests
+### 4. SciPy Signal Processing Tests
 
 These tests verify statistical and frequency-domain feature extraction.
 
@@ -98,7 +123,9 @@ Important file:
 tests/test_signal_processing.py
 ```
 
-### 4. Anomaly Detection Tests
+These tests prove that SciPy-based vibration signal processing is working correctly.
+
+### 5. Anomaly Detection Tests
 
 These tests verify that abnormal sensor behavior is detected correctly.
 
@@ -115,7 +142,7 @@ Important file:
 tests/test_anomaly.py
 ```
 
-### 5. Real NASA IMS Model Tests
+### 6. Real NASA IMS Model Tests
 
 These tests verify that the real trained RandomForestClassifier model can make predictions.
 
@@ -133,7 +160,7 @@ Important file:
 tests/test_real_model.py
 ```
 
-### 6. Real Dataset Tests
+### 7. Real Dataset Tests
 
 These tests verify that the processed NASA IMS dataset exists and has the required structure.
 
@@ -150,7 +177,7 @@ Important file:
 tests/test_real_dataset.py
 ```
 
-### 7. Feature Importance Tests
+### 8. Feature Importance Tests
 
 These tests verify that the feature importance report exists and contains required values.
 
@@ -168,12 +195,35 @@ Important file:
 tests/test_feature_importance.py
 ```
 
-## Why These Tests Are Important
+### 9. H4 System Health Monitoring Test
 
-These tests prove that the H2 component is not only implemented, but also verified.
+This test verifies the H4 platform monitoring endpoint.
+
+It checks that `/system-health` returns:
+
+* system name
+* overall status
+* API status
+* database status
+* model file availability
+* evaluation report availability
+* feature importance report availability
+
+Important file:
+
+```text
+tests/test_api_endpoints.py
+```
+
+This proves that H4 monitoring is connected to the backend API.
+
+## What the Tests Prove
+
+These tests prove that the system is not only implemented, but also verified.
 
 The tests show that:
 
+* H1 edge simulator works
 * the API works
 * the machine learning model is connected
 * real NASA IMS data is used
@@ -181,10 +231,19 @@ The tests show that:
 * SciPy signal processing works
 * anomaly detection works
 * feature importance explainability works
+* H4 system health monitoring works
 * documentation and implementation are supported by automated checks
+
+## Current Expected Result
+
+The current expected test result is:
+
+```text
+31 passed
+```
 
 ## Viva Explanation
 
 During viva, testing can be explained like this:
 
-The project includes automated pytest tests to verify the API endpoints, feature extraction, SciPy signal processing, anomaly detection, real NASA IMS model integration, dataset structure, and feature importance report. The current test suite gives 26 passed tests, which proves that the main H2 functionality is working correctly.
+The project includes automated pytest tests to verify the H1 edge simulator, FastAPI endpoints, feature extraction, SciPy signal processing, anomaly detection, real NASA IMS model integration, dataset structure, feature importance report, and H4 system health monitoring. The current test suite gives 31 passed tests, which proves that the main H1-H4 functionality is working correctly.
