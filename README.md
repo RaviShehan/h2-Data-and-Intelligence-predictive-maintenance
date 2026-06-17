@@ -37,7 +37,7 @@ This project includes separate documentation files to make the system easier to 
 | `SAMPLE_REQUESTS.md` | Provides sample API requests for testing FastAPI endpoints |
 | `RUN_COMMANDS.md` | Lists common commands for testing, running FastAPI, Kafka, model training, Git, and shutdown |
 | `DASHBOARD.md` | Explains the H3 Streamlit dashboard and visualization features |
-
+| `FULL_SYSTEM_OVERVIEW.md` | Explains the full H1-H4 predictive maintenance system flow |
 
 
 
@@ -87,7 +87,7 @@ This project includes separate documentation files to make the system easier to 
 * Sample API request documentation
 * Quick run commands documentation
 * H3 Streamlit dashboard for prediction history, risk summary, model information, and feature importance
-
+* Full H1-H4 system overview documentation
 
 
 ## System Flow
@@ -820,7 +820,7 @@ venv\Scripts\python.exe -m pytest tests
 Expected result:
 
 ```text
-26 passed
+27 passed
 ```
 
 ## Project Status
@@ -882,7 +882,7 @@ Completed:
 * Run commands documentation
 * H3 Streamlit dashboard
 * Dashboard documentation
-
+* Full H1-H4 system overview documentation
 
 Future improvements:
 
