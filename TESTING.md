@@ -17,6 +17,7 @@ The tests check:
 * real NASA IMS model prediction
 * real NASA IMS processed dataset
 * feature importance report
+* H3 dashboard prediction data normalization
 * H4 system health monitoring endpoint
 
 ## Run All Tests
@@ -30,7 +31,7 @@ venv\Scripts\python.exe -m pytest tests
 Expected result:
 
 ```text
-31 passed
+35 passed
 ```
 
 ## Test Folder
@@ -217,6 +218,29 @@ tests/test_api_endpoints.py
 
 This proves that H4 monitoring is connected to the backend API.
 
+### 10. H3 Dashboard Utility Tests
+
+These tests verify the H3 dashboard data-cleaning logic.
+
+They check:
+
+* prediction response from dictionary format
+* prediction response from list format
+* prediction response from JSON string format
+* invalid JSON string handling
+
+Important file:
+
+```text
+tests/test_dashboard_utils.py
+```
+
+These tests prove that the dashboard can safely normalize prediction data before displaying it in Streamlit.
+
+## What the Tests Prove
+
+These tests prove that the system is not tests prove that the dashboard can safely normalize prediction data before displaying it in Streamlit.
+
 ## What the Tests Prove
 
 These tests prove that the system is not only implemented, but also verified.
@@ -231,6 +255,7 @@ The tests show that:
 * SciPy signal processing works
 * anomaly detection works
 * feature importance explainability works
+* H3 dashboard utility logic works
 * H4 system health monitoring works
 * documentation and implementation are supported by automated checks
 
@@ -239,11 +264,11 @@ The tests show that:
 The current expected test result is:
 
 ```text
-31 passed
+35 passed
 ```
 
 ## Viva Explanation
 
 During viva, testing can be explained like this:
 
-The project includes automated pytest tests to verify the H1 edge simulator, FastAPI endpoints, feature extraction, SciPy signal processing, anomaly detection, real NASA IMS model integration, dataset structure, feature importance report, and H4 system health monitoring. The current test suite gives 31 passed tests, which proves that the main H1-H4 functionality is working correctly.
+The project includes automated pytest tests to verify the H1 edge simulator, FastAPI endpoints, feature extraction, SciPy signal processing, anomaly detection, real NASA IMS model integration, dataset structure, feature importance report, H3 dashboard utility logic, and H4 system health monitoring. The current test suite gives 35 passed tests, which proves that the main H1-H4 functionality is working correctly.
