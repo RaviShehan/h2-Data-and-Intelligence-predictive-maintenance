@@ -36,6 +36,9 @@ This project includes separate documentation files to make the system easier to 
 | `DATA_DICTIONARY.md` | Explains raw input fields, extracted features, model outputs, anomaly fields, and database fields |
 | `SAMPLE_REQUESTS.md` | Provides sample API requests for testing FastAPI endpoints |
 | `RUN_COMMANDS.md` | Lists common commands for testing, running FastAPI, Kafka, model training, Git, and shutdown |
+| `DASHBOARD.md` | Explains the H3 Streamlit dashboard and visualization features |
+
+
 
 
 ## Current Features
@@ -83,7 +86,7 @@ This project includes separate documentation files to make the system easier to 
 * Data dictionary documentation
 * Sample API request documentation
 * Quick run commands documentation
-
+* H3 Streamlit dashboard for prediction history, risk summary, model information, and feature importance
 
 
 
@@ -877,7 +880,8 @@ Completed:
 * Data dictionary documentation
 * Sample API request documentation
 * Run commands documentation
-
+* H3 Streamlit dashboard
+* Dashboard documentation
 
 
 Future improvements:
